@@ -11,9 +11,8 @@ func _ready():
 	parent = get_parent()
 	pass
 	
-func onCollide(movement):
+func onPreCollide(movement):
 	move(movement);
-	
 	if not is_colliding():
 		parent.set_pos(parent.get_pos() + movement)
 	else:

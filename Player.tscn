@@ -64,7 +64,9 @@ trigger = false
 transform/scale = Vector2( 0.1, 0.1 )
 texture = ExtResource( 5 )
 
-[node name="Pushable" type="Sprite" parent="."]
+[node name="Pushable" type="Sprite" parent="." groups=[
+"Pushable",
+]]
 
 transform/pos = Vector2( 312, 232 )
 texture = ExtResource( 4 )
