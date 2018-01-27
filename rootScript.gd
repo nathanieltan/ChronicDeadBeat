@@ -31,14 +31,14 @@ func _process(delta):
 	var movement = dir*size
 	kinebody.move(movement);
 	if not kinebody.is_colliding():
-		player.move(movement)
+		player.set_pos(player.get_pos()+movement)
 	else:
-		CollisionControl(kinebody.get_collider())
+		kinebody.get_collider().onCollide(movement)  #CollisionControl(kinebody.get_collider())
 	kinebody.set_pos(Vector2(0.0, 0.0))
 	
-func CollisionControl():
+#func CollisionControl(collisionNode, movement):
 	
-	#get_node("Player").set_pos(block_pos)
+
 func _ready():
 	# Called every time the node is added to the scene.
 	# Initialization here
