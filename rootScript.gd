@@ -33,7 +33,8 @@ func _process(delta):
 	if not kinebody.is_colliding():
 		player.set_pos(player.get_pos()+movement)
 	else:
-		kinebody.get_collider().onCollide(movement)  #CollisionControl(kinebody.get_collider())
+		if(kinebody.get_collider().onCollide(movement)):  #CollisionControl(kinebody.get_collider())
+			player.set_pos(player.get_pos()+movement)
 	kinebody.set_pos(Vector2(0.0, 0.0))
 	
 #func CollisionControl(collisionNode, movement):
