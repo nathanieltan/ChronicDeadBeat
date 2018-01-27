@@ -6,8 +6,10 @@ extends Node2D
 var dir = Vector2(0.0, 0.0)
 var actionTaken = false;
 var size;
+var player;
+
 func _process(delta):
-	var kinebody = get_node("Player/KinematicBody2D")
+	var kinebody = get_node("Player/PlayerBody")
 	dir = Vector2(0.0, 0.0)
 	if not actionTaken:
 		if (Input.is_action_pressed("move_down")):
@@ -26,12 +28,20 @@ func _process(delta):
 		if not (Input.is_action_pressed("move_down") or Input.is_action_pressed("move_up") or Input.is_action_pressed("move_right") or Input.is_action_pressed("move_left")):
 			actionTaken = false;
 	
-	if not kinebody.test_move(dir*size):
-		get_node("Player").move(dir*size)
-
+	var movement = dir*size
+	kinebody.move(movement);
+	if not kinebody.is_colliding():
+		player.move(movement)
+	else:
+		CollisionControl(kinebody.get_collider())
+	kinebody.set_pos(Vector2(0.0, 0.0))
+	
+func CollisionControl():
+	
 	#get_node("Player").set_pos(block_pos)
 func _ready():
 	# Called every time the node is added to the scene.
 	# Initialization here
+	player = get_node("Player");
 	size = get_node("TileMap").get_cell_size()
 	set_process(true)
