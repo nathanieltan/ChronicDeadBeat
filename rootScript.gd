@@ -5,7 +5,7 @@ extends Node2D
 # var b = "textvar"
 var dir = Vector2(0.0, 0.0)
 func _process(delta):
-	var block_pos = get_node("testBlock").get_pos()
+	var block_pos = get_node("Player").get_pos()
 	dir = Vector2(0.0, 0.0)
 	if (Input.is_action_pressed("move_down")):
 		dir.y = 1;
@@ -17,8 +17,7 @@ func _process(delta):
 		dir.x = -1;
 		
 	block_pos += dir*80*delta
-	get_node("testBlock").set_pos(block_pos)
-	
+	get_node("Player").set_pos(block_pos)
 func _ready():
 	# Called every time the node is added to the scene.
 	# Initialization here
