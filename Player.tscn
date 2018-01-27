@@ -1,12 +1,14 @@
-[gd_scene load_steps=9 format=1]
+[gd_scene load_steps=11 format=1]
 
 [ext_resource path="res://rootScript.gd" type="Script" id=1]
 [ext_resource path="res://mytiles.res" type="TileSet" id=2]
 [ext_resource path="res://tilemapScript.gd" type="Script" id=3]
 [ext_resource path="res://images/block.png" type="Texture" id=4]
-[ext_resource path="res://moveScript.gd" type="Script" id=5]
-[ext_resource path="res://pushableScript.gd" type="Script" id=6]
-[ext_resource path="res://laserHead.tscn" type="PackedScene" id=7]
+[ext_resource path="res://PlayerScript.gd" type="Script" id=5]
+[ext_resource path="res://playerBodyScript.gd" type="Script" id=6]
+[ext_resource path="res://pushableScript.gd" type="Script" id=7]
+[ext_resource path="res://laserHead.tscn" type="PackedScene" id=8]
+[ext_resource path="res://BasicEnemy.tscn" type="PackedScene" id=9]
 
 [sub_resource type="ConvexPolygonShape2D" id=1]
 
@@ -53,6 +55,7 @@ shapes/0/trigger = false
 collision/layers = 1
 collision/mask = 1
 collision/margin = 0.08
+script/script = ExtResource( 6 )
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Player/PlayerBody"]
 
@@ -64,7 +67,6 @@ trigger = false
 [node name="Sprite" type="Sprite" parent="Player/PlayerBody"]
 
 transform/scale = Vector2( 0.1, 0.1 )
-texture = ExtResource( 5 )
 
 [node name="Pushable" type="Sprite" parent="." groups=[
 "Pushable",
@@ -83,7 +85,7 @@ shapes/0/trigger = false
 collision/layers = 1
 collision/mask = 1
 collision/margin = 0.08
-script/script = ExtResource( 6 )
+script/script = ExtResource( 7 )
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Pushable/PushableBody"]
 
@@ -92,9 +94,17 @@ polygon = Vector2Array( -4, 4, -4, -4, 4, -4, 4, 4 )
 shape_range = Vector2( 0, 0 )
 trigger = false
 
-[node name="laserHead" parent="." instance=ExtResource( 7 )]
+[node name="laserHead" parent="." instance=ExtResource( 8 )]
 
 transform/pos = Vector2( 264, 248 )
+
+[node name="BasicEnemy" parent="." instance=ExtResource( 9 )]
+
+transform/pos = Vector2( 264, 152 )
+
+[node name="BasicEnemy1" parent="." instance=ExtResource( 9 )]
+
+transform/pos = Vector2( 232, 136 )
 
 
 [editable path="laserHead"]

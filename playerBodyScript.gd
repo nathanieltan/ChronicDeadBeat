@@ -1,4 +1,4 @@
-extends TileMap
+extends KinematicBody2D
 
 # class member variables go here, for example:
 # var a = 2
@@ -9,8 +9,10 @@ func _ready():
 	# Initialization here
 	pass
 
-func onInitialCollide(movement):
-	return false
 
 func onPreCollide(id, movement):
-	return false
+	if (id == 0):
+		print("WHAT???!?!?!?!")
+	elif(id == 1):
+		return true
+

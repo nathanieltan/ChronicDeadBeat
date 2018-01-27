@@ -11,11 +11,21 @@ func _ready():
 	parent = get_parent()
 	pass
 	
-func onPreCollide(movement):
+func onInitialCollide(movement):
 	move(movement);
 	if not is_colliding():
-		parent.set_pos(parent.get_pos() + movement)
+		return true;
 	else:
 		return false;
-	set_pos(Vector2(0.0, 0.0))
-	return true
+	
+func onPreCollide(id, movement):
+	if (id == 0): #player
+		move(movement);
+		if not is_colliding():
+			parent.set_pos(parent.get_pos() + movement)
+		else:
+			return false;
+		set_pos(Vector2(0.0, 0.0))
+		return true
+	elif (id == 1):
+		return false

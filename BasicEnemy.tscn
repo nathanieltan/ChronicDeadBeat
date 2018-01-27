@@ -1,20 +1,23 @@
-[gd_scene load_steps=4 format=1]
+[gd_scene load_steps=5 format=1]
 
 [ext_resource path="res://images/block.png" type="Texture" id=1]
 [ext_resource path="res://basicEnemy.gd" type="Script" id=2]
+[ext_resource path="res://BasicEnemyBodyScript.gd" type="Script" id=3]
 
 [sub_resource type="ConvexPolygonShape2D" id=1]
 
 custom_solver_bias = 0.0
 points = Vector2Array( -4, 4, -4, -4, 4, -4, 4, 4 )
 
-[node name="Enemy" type="Sprite"]
+[node name="BasicEnemy" type="Sprite" groups=[
+"Enemies",
+]]
 
 texture = ExtResource( 1 )
 modulate = Color( 0.224792, 0.992188, 0.488585, 1 )
 script/script = ExtResource( 2 )
 
-[node name="KinematicBody2D" type="KinematicBody2D" parent="."]
+[node name="BasicEnemyBody" type="KinematicBody2D" parent="."]
 
 input/pickable = false
 shapes/0/shape = SubResource( 1 )
@@ -23,8 +26,9 @@ shapes/0/trigger = false
 collision/layers = 1
 collision/mask = 1
 collision/margin = 0.08
+script/script = ExtResource( 3 )
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="KinematicBody2D"]
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="BasicEnemyBody"]
 
 build_mode = 0
 polygon = Vector2Array( -4, 4, -4, -4, 4, -4, 4, 4 )
