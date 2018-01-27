@@ -10,7 +10,7 @@ func _ready():
 	pass
 
 func onInitialCollide(movement):
-	return false;
+	return true;
 
 func onPreCollide(id, player):
 	if (id == 0):

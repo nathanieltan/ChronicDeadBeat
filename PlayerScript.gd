@@ -6,7 +6,7 @@ extends Sprite
 var TimeWait = 0;
 var spawned = false;
 const dist = 16;
-const animTime = 1;
+const animTime = .4;
 var travelled = 0;
 var move = Vector2(0.0, 0.0);
 var kinebody;
@@ -22,7 +22,6 @@ func _process(delta):
 		var moveamount = min(move.length() * delta / animTime, dist - travelled)
 		travelled += moveamount
 		set_pos(get_pos() + move.normalized() * moveamount)
-	pass
 
 func InitialCheck(movement):
 	kinebody.move(movement)

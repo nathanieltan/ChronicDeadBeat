@@ -23,10 +23,11 @@ func onPreCollide(id, movement):
 		move(movement);
 		if not is_colliding():
 			parent.set_pos(parent.get_pos() + movement)
+			set_pos(Vector2(0.0, 0.0))
+			return true
 		else:
+			set_pos(Vector2(0.0, 0.0))
 			return false;
-		set_pos(Vector2(0.0, 0.0))
-		return true
 	elif (id == 1):
 		return false
 
