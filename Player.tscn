@@ -2,16 +2,12 @@
 
 [ext_resource path="res://rootScript.gd" type="Script" id=1]
 [ext_resource path="res://mytiles.res" type="TileSet" id=2]
-[ext_resource path="res://images/block.png" type="Texture" id=3]
-[ext_resource path="res://moveScript.gd" type="Script" id=4]
-[ext_resource path="res://laserHead.gd" type="Script" id=5]
+[ext_resource path="res://tilemapScript.gd" type="Script" id=3]
+[ext_resource path="res://images/block.png" type="Texture" id=4]
+[ext_resource path="res://icon.png" type="Texture" id=5]
+[ext_resource path="res://pushableScript.gd" type="Script" id=6]
 
 [sub_resource type="ConvexPolygonShape2D" id=1]
-
-custom_solver_bias = 0.0
-points = Vector2Array( -4, 4, -4, -4, 4, -4, 4, 4 )
-
-[sub_resource type="ConvexPolygonShape2D" id=2]
 
 custom_solver_bias = 0.0
 points = Vector2Array( -4, 4, -4, -4, 4, -4, 4, 4 )
@@ -37,14 +33,14 @@ collision/layers = 1
 collision/mask = 1
 occluder/light_mask = 1
 tile_data = IntArray( 262156, 0, 262157, 0, 262158, 0, 327692, 0, 327694, 0, 327695, 0, 327696, 0, 393228, 0, 393233, 0, 393234, 0, 458764, 0, 458770, 0, 458771, 0, 458772, 0, 524300, 0, 524308, 0, 524309, 0, 524310, 0, 589836, 0, 589837, 0, 589846, 0, 589847, 0, 655373, 0, 655383, 0, 720909, 0, 720920, 0, 786445, 0, 786456, 0, 851981, 0, 851992, 0, 917517, 0, 917518, 0, 917527, 0, 917528, 0, 983054, 0, 983055, 0, 983063, 0, 1048592, 0, 1048593, 0, 1048598, 0, 1048599, 0, 1114129, 0, 1114130, 0, 1114131, 0, 1114132, 0, 1114133, 0 )
+script/script = ExtResource( 3 )
 
 [node name="Player" type="Sprite" parent="." groups=[
 "Player",
 ]]
 
 transform/pos = Vector2( 328, 248 )
-texture = ExtResource( 3 )
-script/script = ExtResource( 4 )
+texture = ExtResource( 4 )
 
 [node name="PlayerBody" type="KinematicBody2D" parent="Player"]
 
@@ -63,10 +59,15 @@ polygon = Vector2Array( -4, 4, -4, -4, 4, -4, 4, 4 )
 shape_range = Vector2( 0, 0 )
 trigger = false
 
+[node name="Sprite" type="Sprite" parent="Player/PlayerBody"]
+
+transform/scale = Vector2( 0.1, 0.1 )
+texture = ExtResource( 5 )
+
 [node name="Pushable" type="Sprite" parent="."]
 
 transform/pos = Vector2( 312, 232 )
-texture = ExtResource( 3 )
+texture = ExtResource( 4 )
 modulate = Color( 0.269531, 0.469269, 1, 1 )
 
 [node name="PushableBody" type="KinematicBody2D" parent="Pushable"]
@@ -78,32 +79,9 @@ shapes/0/trigger = false
 collision/layers = 1
 collision/mask = 1
 collision/margin = 0.08
+script/script = ExtResource( 6 )
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Pushable/PushableBody"]
-
-build_mode = 0
-polygon = Vector2Array( -4, 4, -4, -4, 4, -4, 4, 4 )
-shape_range = Vector2( 0, 0 )
-trigger = false
-
-[node name="laserHead" type="Sprite" parent="."]
-
-transform/pos = Vector2( 264, 248 )
-texture = ExtResource( 3 )
-modulate = Color( 0.168976, 0.79916, 0.882813, 1 )
-script/script = ExtResource( 5 )
-
-[node name="laserHeadBody" type="KinematicBody2D" parent="laserHead"]
-
-input/pickable = false
-shapes/0/shape = SubResource( 2 )
-shapes/0/transform = Matrix32( 1, 0, 0, 1, 0, 0 )
-shapes/0/trigger = false
-collision/layers = 1
-collision/mask = 1
-collision/margin = 0.08
-
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="laserHead/laserHeadBody"]
 
 build_mode = 0
 polygon = Vector2Array( -4, 4, -4, -4, 4, -4, 4, 4 )

@@ -13,7 +13,10 @@ func _ready():
 	
 func onCollide(movement):
 	move(movement);
+	
 	if not is_colliding():
 		parent.set_pos(parent.get_pos() + movement)
+	else:
+		return false;
 	set_pos(Vector2(0.0, 0.0))
 	return true
