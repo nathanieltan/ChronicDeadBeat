@@ -46,3 +46,4 @@ func TimeSpawn():
 func PostCheck(movement):
 	move = movement
 	travelled = 0
+	kinebody.set_pos(Vector2(0.0,0.0))
