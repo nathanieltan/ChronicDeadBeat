@@ -1,14 +1,37 @@
-[gd_scene load_steps=11 format=1]
+[gd_scene load_steps=14 format=1]
 
 [ext_resource path="res://rootScript.gd" type="Script" id=1]
 [ext_resource path="res://mytiles.res" type="TileSet" id=2]
 [ext_resource path="res://tilemapScript.gd" type="Script" id=3]
-[ext_resource path="res://images/block.png" type="Texture" id=4]
+[ext_resource path="res://images/player_v2.png" type="Texture" id=4]
 [ext_resource path="res://PlayerScript.gd" type="Script" id=5]
 [ext_resource path="res://playerBodyScript.gd" type="Script" id=6]
-[ext_resource path="res://pushableScript.gd" type="Script" id=7]
-[ext_resource path="res://laserHead.tscn" type="PackedScene" id=8]
-[ext_resource path="res://BasicEnemy.tscn" type="PackedScene" id=9]
+[ext_resource path="res://images/block.png" type="Texture" id=7]
+[ext_resource path="res://pushableScript.gd" type="Script" id=8]
+[ext_resource path="res://laserHead.tscn" type="PackedScene" id=9]
+[ext_resource path="res://BasicEnemy.tscn" type="PackedScene" id=10]
+
+[sub_resource type="ConvexPolygonShape2D" id=3]
+
+custom_solver_bias = 0.0
+points = Vector2Array( -4, 4, -4, -4, 4, -4, 4, 4 )
+
+[sub_resource type="Animation" id=2]
+
+resource/name = "leftShoot"
+length = 1.0
+loop = true
+step = 0.13
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/imported = false
+tracks/0/keys = {
+"times": FloatArray( 0, 0.13, 0.26, 0.39, 0.52, 0.65, 0.78, 0.91 ),
+"transitions": FloatArray( 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 0, 1, 2, 3, 4, 5, 6, 7 ]
+}
 
 [sub_resource type="ConvexPolygonShape2D" id=1]
 
@@ -42,14 +65,16 @@ script/script = ExtResource( 3 )
 "Player",
 ]]
 
-transform/pos = Vector2( 328, 248 )
+transform/pos = Vector2( 248, 224 )
 texture = ExtResource( 4 )
+hframes = 8
 script/script = ExtResource( 5 )
 
 [node name="PlayerBody" type="KinematicBody2D" parent="Player"]
 
+transform/pos = Vector2( 0, 8 )
 input/pickable = false
-shapes/0/shape = SubResource( 1 )
+shapes/0/shape = SubResource( 3 )
 shapes/0/transform = Matrix32( 1, 0, 0, 1, 0, 0 )
 shapes/0/trigger = false
 collision/layers = 1
@@ -66,14 +91,26 @@ trigger = false
 
 [node name="Sprite" type="Sprite" parent="Player/PlayerBody"]
 
+visibility/visible = false
 transform/scale = Vector2( 0.1, 0.1 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Player"]
+
+playback/process_mode = 1
+playback/default_blend_time = 0.0
+root/root = NodePath("..")
+anims/leftShoot = SubResource( 2 )
+playback/active = true
+playback/speed = 1.0
+blend_times = [  ]
+autoplay = "leftShoot"
 
 [node name="Pushable" type="Sprite" parent="." groups=[
 "Pushable",
 ]]
 
 transform/pos = Vector2( 312, 232 )
-texture = ExtResource( 4 )
+texture = ExtResource( 7 )
 modulate = Color( 0.269531, 0.469269, 1, 1 )
 
 [node name="PushableBody" type="KinematicBody2D" parent="Pushable"]
@@ -85,7 +122,7 @@ shapes/0/trigger = false
 collision/layers = 1
 collision/mask = 1
 collision/margin = 0.08
-script/script = ExtResource( 7 )
+script/script = ExtResource( 8 )
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Pushable/PushableBody"]
 
@@ -94,15 +131,15 @@ polygon = Vector2Array( -4, 4, -4, -4, 4, -4, 4, 4 )
 shape_range = Vector2( 0, 0 )
 trigger = false
 
-[node name="laserHead" parent="." instance=ExtResource( 8 )]
+[node name="laserHead" parent="." instance=ExtResource( 9 )]
 
 transform/pos = Vector2( 264, 248 )
 
-[node name="BasicEnemy" parent="." instance=ExtResource( 9 )]
+[node name="BasicEnemy" parent="." instance=ExtResource( 10 )]
 
 transform/pos = Vector2( 264, 152 )
 
-[node name="BasicEnemy1" parent="." instance=ExtResource( 9 )]
+[node name="BasicEnemy1" parent="." instance=ExtResource( 10 )]
 
 transform/pos = Vector2( 232, 136 )
 
