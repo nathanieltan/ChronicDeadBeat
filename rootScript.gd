@@ -25,7 +25,6 @@ func _process(delta):
 			dir.x = -1;
 			actionTaken = true;
 		elif (Input.is_action_pressed("shoot")):
-			print("test")
 			get_node("laserHead").shoot("up")
 			actionTaken = true;
 	else:
