@@ -50,17 +50,18 @@ func _process(delta):
 	if (actionvalid):
 		# DO PRECHECKING PROCEDURE FOR ALL MOVING OBJECT
 		scenetree.call_group(0, "Enemies", "PreCheck", kinebody.get_global_pos())
-		player.PreCheck();
+		player.PreCheck(movement);
+		
 		# DO SPAWNING PROCEDURE
 		scenetree.call_group(0, "Enemies", "TimeSpawn")
+		player.TimeSpawn()
 		
+		#scenetree.call_group(0, "Enemies", "Move", kinebody.get_global_pos())
+		#player.Move()
 		
-		# DO PLAY ANIMATION / MOVEMENT / GAME EFFECTS
-		scenetree.call_group(0, "Enemies", "Move", kinebody.get_global_pos())
-		
-		
-		# DO CHECKING PROCEDURE
+		# DO CHECKING PROCEDURE (Check for animation, movement, and gamestates)
 		scenetree.call_group(0, "Enemies", "PostCheck");
+		player.PostCheck(movement)
 	
 	actionvalid = false;
 		
