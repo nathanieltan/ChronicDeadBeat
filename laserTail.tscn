@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=1]
+
+[ext_resource path="res://images/block.png" type="Texture" id=1]
+
+[node name="laserTail" type="Sprite"]
+
+texture = ExtResource( 1 )
+modulate = Color( 0.0829163, 0.923503, 0.964844, 1 )
+
+
