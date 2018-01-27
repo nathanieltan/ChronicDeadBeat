@@ -24,8 +24,12 @@ func _process(delta):
 		elif (Input.is_action_pressed("move_left")):
 			dir.x = -1;
 			actionTaken = true;
+		elif (Input.is_action_pressed("shoot")):
+			print("test")
+			get_node("laserHead").shoot("up")
+			actionTaken = true;
 	else:
-		if not (Input.is_action_pressed("move_down") or Input.is_action_pressed("move_up") or Input.is_action_pressed("move_right") or Input.is_action_pressed("move_left")):
+		if not (Input.is_action_pressed("move_down") or Input.is_action_pressed("shoot") or Input.is_action_pressed("move_up") or Input.is_action_pressed("move_right") or Input.is_action_pressed("move_left")):
 			actionTaken = false;
 	
 	var movement = dir*size
@@ -36,7 +40,7 @@ func _process(delta):
 		if(kinebody.get_collider().onCollide(movement)):  #CollisionControl(kinebody.get_collider())
 			player.set_pos(player.get_pos()+movement)
 	kinebody.set_pos(Vector2(0.0, 0.0))
-	
+
 #func CollisionControl(collisionNode, movement):
 	
 
