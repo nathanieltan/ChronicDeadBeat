@@ -55,6 +55,10 @@ func _process(delta):
 				get_tree().change_scene("res://Level2.tscn")
 				shootdir.x = 1;
 				actionTaken = true;
+			elif (Input.is_action_pressed("retry")):
+				var currentScene = get_tree().get_current_scene()
+				if(not currentScene.get_filename() == "res://TitleScreen.tscn"):
+					get_tree().reload_current_scene()
 		else:
 			if not (Input.is_action_pressed("move_down") 
 			or Input.is_action_pressed("move_up")
