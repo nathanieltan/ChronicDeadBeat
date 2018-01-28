@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=1]
+[gd_scene load_steps=16 format=1]
 
 [ext_resource path="res://rootScript.gd" type="Script" id=1]
 [ext_resource path="res://mytiles.res" type="TileSet" id=2]
@@ -8,11 +8,12 @@
 [ext_resource path="res://playerBodyScript.gd" type="Script" id=6]
 [ext_resource path="res://icon.png" type="Texture" id=7]
 [ext_resource path="res://images/block.png" type="Texture" id=8]
-[ext_resource path="res://pushableScript.gd" type="Script" id=9]
-[ext_resource path="res://laserHead.tscn" type="PackedScene" id=10]
-[ext_resource path="res://BasicEnemy.tscn" type="PackedScene" id=11]
+[ext_resource path="res://pushableSpriteScript.gd" type="Script" id=9]
+[ext_resource path="res://pushableScript.gd" type="Script" id=10]
+[ext_resource path="res://laserHead.tscn" type="PackedScene" id=11]
+[ext_resource path="res://BasicEnemy.tscn" type="PackedScene" id=12]
 
-[sub_resource type="ConvexPolygonShape2D" id=1]
+[sub_resource type="ConvexPolygonShape2D" id=3]
 
 custom_solver_bias = 0.0
 points = Vector2Array( -4, 4, -4, -4, 4, -4, 4, 4 )
@@ -34,7 +35,7 @@ tracks/0/keys = {
 "values": [ 0, 1, 2, 3, 4, 5, 6, 7 ]
 }
 
-[sub_resource type="ConvexPolygonShape2D" id=3]
+[sub_resource type="ConvexPolygonShape2D" id=4]
 
 custom_solver_bias = 0.0
 points = Vector2Array( -4, 4, -4, -4, 4, -4, 4, 4 )
@@ -45,6 +46,7 @@ script/script = ExtResource( 1 )
 
 [node name="TileMap" type="TileMap" parent="."]
 
+transform/pos = Vector2( -24, 0 )
 mode = 0
 tile_set = ExtResource( 2 )
 cell/size = Vector2( 16, 16 )
@@ -66,17 +68,16 @@ script/script = ExtResource( 3 )
 "Player",
 ]]
 
-transform/pos = Vector2( 248, 224 )
+transform/pos = Vector2( 224, 224 )
 texture = ExtResource( 4 )
 hframes = 8
 script/script = ExtResource( 5 )
 
 [node name="PlayerBody" type="KinematicBody2D" parent="Player"]
 
-transform/pos = Vector2( 0, 8 )
 input/pickable = false
-shapes/0/shape = SubResource( 1 )
-shapes/0/transform = Matrix32( 1, 0, 0, 1, 0, 0 )
+shapes/0/shape = SubResource( 3 )
+shapes/0/transform = Matrix32( 1, 0, 0, 1, 0, 8 )
 shapes/0/trigger = false
 collision/layers = 1
 collision/mask = 1
@@ -85,12 +86,13 @@ script/script = ExtResource( 6 )
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Player/PlayerBody"]
 
+transform/pos = Vector2( 0, 8 )
 build_mode = 0
 polygon = Vector2Array( -4, 4, -4, -4, 4, -4, 4, 4 )
 shape_range = Vector2( 0, 0 )
 trigger = false
 
-[node name="DebugSprite" type="Sprite" parent="Player/PlayerBody"]
+[node name="DebugSprite" type="Sprite" parent="Player/PlayerBody/CollisionPolygon2D"]
 
 transform/scale = Vector2( 0.1, 0.1 )
 texture = ExtResource( 7 )
@@ -107,23 +109,24 @@ blend_times = [  ]
 autoplay = "leftShoot"
 
 [node name="Pushable" type="Sprite" parent="." groups=[
-"Pushable",
+"Terrain",
 ]]
 
-transform/pos = Vector2( 312, 232 )
+transform/pos = Vector2( 288, 232 )
 texture = ExtResource( 8 )
 modulate = Color( 0.269531, 0.469269, 1, 1 )
+script/script = ExtResource( 9 )
 
 [node name="PushableBody" type="KinematicBody2D" parent="Pushable"]
 
 input/pickable = false
-shapes/0/shape = SubResource( 3 )
+shapes/0/shape = SubResource( 4 )
 shapes/0/transform = Matrix32( 1, 0, 0, 1, 0, 0 )
 shapes/0/trigger = false
 collision/layers = 1
 collision/mask = 1
 collision/margin = 0.08
-script/script = ExtResource( 9 )
+script/script = ExtResource( 10 )
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Pushable/PushableBody"]
 
@@ -134,30 +137,31 @@ trigger = false
 
 [node name="DebugSprite1" type="Sprite" parent="Pushable/PushableBody"]
 
+transform/pos = Vector2( 6.19888e-06, 6.19888e-06 )
 transform/scale = Vector2( 0.1, 0.1 )
 texture = ExtResource( 7 )
 
-[node name="laserHead" parent="." instance=ExtResource( 10 )]
+[node name="laserHead" parent="." instance=ExtResource( 11 )]
 
-transform/pos = Vector2( 264, 248 )
+transform/pos = Vector2( 240, 248 )
 
 [node name="DebugSprite2" type="Sprite" parent="laserHead/laserHeadBody"]
 
 transform/scale = Vector2( 0.1, 0.1 )
 texture = ExtResource( 7 )
 
-[node name="BasicEnemy" parent="." instance=ExtResource( 11 )]
+[node name="BasicEnemy" parent="." instance=ExtResource( 12 )]
 
-transform/pos = Vector2( 264, 152 )
+transform/pos = Vector2( 240, 152 )
 
 [node name="DebugSprite3" type="Sprite" parent="BasicEnemy"]
 
 transform/scale = Vector2( 0.1, 0.1 )
 texture = ExtResource( 7 )
 
-[node name="BasicEnemy1" parent="." instance=ExtResource( 11 )]
+[node name="BasicEnemy1" parent="." instance=ExtResource( 12 )]
 
-transform/pos = Vector2( 232, 136 )
+transform/pos = Vector2( 208, 136 )
 
 [node name="DebugSprite4" type="Sprite" parent="BasicEnemy1"]
 
