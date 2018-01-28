@@ -23,6 +23,7 @@ var kinebody
 var allObjects;
 var collidingTileMap;
 var uncollidingTileMap;
+var lastScenePath;
 
 func _process(delta):
 	dir = Vector2(0.0, 0.0)
@@ -57,8 +58,10 @@ func _process(delta):
 				actionTaken = true;
 			elif (Input.is_action_pressed("retry")):
 				var currentScene = get_tree().get_current_scene()
-				if(not currentScene.get_filename() == "res://TitleScreen.tscn"):
+				if(not (currentScene.get_filename() == "res://TitleScreen.tscn" or currentScene.get_filename() == "res://GameOver.tscn")):
 					get_tree().reload_current_scene()
+				elif(currentScene.get_filename() == "res://GameOver.tscn"):
+					get_tree().change_scene(get_last_scene())
 		else:
 			if not (Input.is_action_pressed("move_down") 
 			or Input.is_action_pressed("move_up")
@@ -126,30 +129,40 @@ func Explode(node1, node2):
 	print(node1.get_name())
 	print(node2.get_name())
 	if (node1.is_in_group("Terrain") and node2.is_in_group("Terrain")):
-		UpdateNode(0, node1.get_pos())
-		UpdateNode(0, node2.get_pos())
+		UpdateNode(0, node1.get_pos()/16)
+		UpdateNode(0, node2.get_pos()/16)
 		node1.queue_free()
 		node2.queue_free()
 	elif(node1.is_in_group("Terrain") or node2.is_in_group("Terrain")):
 		if (node1.is_in_group("Enemies") or node1 == player):
-			UpdateNode(0, node1.get_pos())
-			node1.queue_free()
+			UpdateNode(0, node1.get_pos()/16)
+			if(node1 == player):
+				playerDeath()
+			else:
+				node1.queue_free()
 		elif (node2.is_in_group("Enemies") or node2 == player):
-			UpdateNode(0, node2.get_pos())
-			node2.queue_free()
+			UpdateNode(0, node2.get_pos()/16)
+			playerDeath()
 	elif(node1.is_in_group("Enemies") and node2.is_in_group("Enemies")):
-		UpdateNode(0, node1.get_pos())
-		UpdateNode(0, node2.get_pos())
+		UpdateNode(0, node1.get_pos()/16)
+		UpdateNode(0, node2.get_pos()/16)
 		node1.queue_free()
 		node2.queue_free()
 	elif(node1.is_in_group("Enemies") or node2.is_in_group("Enemies")):
 		if (node1 == player):
-			UpdateNode(0, node1.get_pos())
-			node1.queue_free()
+			UpdateNode(0, node1.get_pos()/16)
+			playerDeath()
 		elif (node2 == player):
-			UpdateNode(0, node2.get_pos())
-			node2.queue_free()
+			UpdateNode(0, node2.get_pos()/16)
+			playerDeath()
 
+func playerDeath():
+	lastScenePath = get_tree().get_current_scene().get_filename()
+	get_tree().get_root().get_child(0).set_last_scene_name(lastScenePath)
+	get_tree().change_scene("res://GameOver.tscn")
+	
+func get_last_scene():
+	return lastScenePath
 func _ready():
 	# Called every time the node is added to the scene.
 	# Initialization here
