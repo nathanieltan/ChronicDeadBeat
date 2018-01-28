@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=1]
+[gd_scene load_steps=21 format=1]
 
 [ext_resource path="res://rootScript.gd" type="Script" id=1]
 [ext_resource path="res://uncollidingTiles.res" type="TileSet" id=2]
@@ -12,7 +12,6 @@
 [ext_resource path="res://Teleport.tscn" type="PackedScene" id=10]
 [ext_resource path="res://laserHead.tscn" type="PackedScene" id=11]
 [ext_resource path="res://BasicEnemy.tscn" type="PackedScene" id=12]
-[ext_resource path="res://Pushable.tscn" type="PackedScene" id=13]
 
 [sub_resource type="ConvexPolygonShape2D" id=1]
 
@@ -241,11 +240,6 @@ editor/display_folded = true
 visibility/visible = false
 transform/pos = Vector2( 264, 248 )
 
-[node name="DebugSprite2" type="Sprite" parent="laserHead/laserHeadBody"]
-
-transform/scale = Vector2( 0.1, 0.1 )
-texture = ExtResource( 9 )
-
 [node name="BasicEnemy" parent="." instance=ExtResource( 12 )]
 
 transform/pos = Vector2( 312, 160 )
@@ -275,14 +269,5 @@ drag_margin/top = 0.2
 drag_margin/right = 0.2
 drag_margin/bottom = 0.2
 
-[node name="Pushable" parent="." instance=ExtResource( 10 )]
-
-transform/pos = Vector2( 328, 200 )
-
-[node name="PushableBody" parent="Pushable"]
-
-visibility/visible = false
-
 
 [editable path="laserHead"]
-[editable path="Pushable"]

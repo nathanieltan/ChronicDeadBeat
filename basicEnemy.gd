@@ -100,7 +100,7 @@ func IntToMove(id):
 	var animationPlayer = get_node("AnimationPlayer")
 	if (id == 0):
 		animationPlayer.play("ballUp")
-				show_select_spikes([])
+		show_select_spikes([])
 		return Vector2(0, -1)
 	if (id == 1):
 		show_select_spikes([])
