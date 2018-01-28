@@ -84,7 +84,7 @@ tracks/0/keys = {
 "values": [ 16, 17, 18, 19, 20, 21, 22, 23 ]
 }
 
-[sub_resource type="Animation" id=10]
+[sub_resource type="Animation" id=6]
 
 resource/name = "teleportIn"
 length = 1.0
@@ -101,7 +101,7 @@ tracks/0/keys = {
 "values": [ 72, 73, 74, 75, 76, 77, 78, 79 ]
 }
 
-[sub_resource type="Animation" id=6]
+[sub_resource type="Animation" id=7]
 
 length = 0.5
 loop = false
@@ -117,7 +117,7 @@ tracks/0/keys = {
 "values": [ 24, 25, 26, 27, 28, 29, 30, 31 ]
 }
 
-[sub_resource type="Animation" id=7]
+[sub_resource type="Animation" id=8]
 
 length = 0.5
 loop = false
@@ -223,9 +223,9 @@ anims/idleLeft = SubResource( 2 )
 anims/idleRight = SubResource( 3 )
 anims/shootLeft = SubResource( 4 )
 anims/shootRight = SubResource( 5 )
-anims/teleportIn = SubResource( 10 )
-anims/walkLeft = SubResource( 6 )
-anims/walkRight = SubResource( 7 )
+anims/teleportIn = SubResource( 6 )
+anims/walkLeft = SubResource( 7 )
+anims/walkRight = SubResource( 8 )
 playback/active = true
 playback/speed = 1.0
 blend_times = [  ]
