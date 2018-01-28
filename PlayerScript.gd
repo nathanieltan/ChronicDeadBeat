@@ -177,10 +177,10 @@ func CheckShoot(shootdir):
 		anim.play("shootUpLeft")
 		
 	elif shootdir == Vector2(0, 1) and playerFacing == "right":
-		anim.play("shootDown")
+		anim.play("shootDownLeft")
 		
 	elif shootdir == Vector2(0, 1) and playerFacing == "left":
-		anim.play("shootDownLeft")
+		anim.play("shootDownActualLeft")
 	
 	var checkhead = get_pos()
 	var laserspots = []

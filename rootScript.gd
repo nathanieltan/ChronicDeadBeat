@@ -52,10 +52,7 @@ func _process(delta):
 				shootdir.x = -1;
 				actionTaken = true;
 			elif (Input.is_action_pressed("shoot_right")):
-<<<<<<< HEAD
-=======
 				#get_tree().change_scene("res://Level2.tscn")
->>>>>>> a75bdf765ab3239a9508ced7e376f73f424b90b3
 				shootdir.x = 1;
 				actionTaken = true;
 			elif (Input.is_action_pressed("retry")):
