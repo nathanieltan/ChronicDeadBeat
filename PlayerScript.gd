@@ -11,6 +11,7 @@ var travelled = 0;
 var move = Vector2(0.0, 0.0);
 var kinebody;
 var controller;
+var playerFacing = "right";
 func _ready():
 	# Called every time the node is added to the scene.
 	# Initialization here
@@ -20,7 +21,14 @@ func _ready():
 	pass
 
 func _process(delta):
-	#print (move)
+	# Checks if the idle animation should play
+	if travelled >= dist:
+		var animationPlayer = get_node("AnimationPlayer")
+		if not animationPlayer.is_playing():
+			if playerFacing == "right":
+				animationPlayer.play("idleRight")
+			else:
+				animationPlayer.play("idleLeft")
 	controller.DepthChanger(get_node("."))
 	if (travelled < dist):
 		var moveamount = min(move.length() * delta / animTime, dist - travelled)
@@ -54,6 +62,21 @@ func PreCheck():
 		moveOk = kinebody.get_collider().onPreCollide(0, move)
 	if not moveOk:
 		move = Vector2(0.0, 0.0)
+	else:
+		# Controls Animations if Player Moves successfully
+		var animationPlayer = get_node("AnimationPlayer")
+		if move.x < 0:
+			animationPlayer.play("walkLeft")
+			playerFacing = "left"
+		elif move.x > 0:
+			animationPlayer.play("walkRight")
+			playerFacing = "right"
+		elif move.y != 0:
+			if playerFacing == "right":
+				animationPlayer.play("walkRight")
+			else:
+				animationPlayer.play("walkLeft")
+		
 
 func TimeSpawn():
 	if (TimeWait > 0):
