@@ -24,7 +24,6 @@ func _ready():
 	controller = get_parent()
 	set_process(true)
 	
-	var animationPlayer = get_node("AnimationPlayer")
 	#animationPlayer.play("ballCharge")
 
 func _process(delta):
@@ -57,13 +56,14 @@ func PreCheck(playerPos): #playerPos is the future position of the player
 			test = true;
 		else:
 			test = id.onPreCollide(1, get_node("."));
-	
+				
 		if test:
 			targ += dir
 			controller.UpdateNode(0, get_pos()/16)
 			controller.UpdateNode(get_node("."), targ)
 		else:
 			dir = Vector2(0.0, 0.0)
+			
 			#return true
 	
 
@@ -165,12 +165,12 @@ func IntToMove(id):
 func CheckShoot(shootdir):
 	#var anim = get_node("AnimationPlayer")
 	if shootdir == Vector2(1, 0):
-		#anim.play("shootRight")
+		find_node("AnimationPlayer").play("FireRight")
 		#playerFacing = "right"
 		pass
 		
 	elif shootdir == Vector2(-1, 0):
-		#anim.play("shootLeft")		
+		find_node("AnimationPlayer").play("FireLeft")	
 		#playerFacing = "left"
 		pass
 	
