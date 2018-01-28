@@ -13,7 +13,7 @@ var lastmoving = false;
 var rerunsignal = false;
 var timer = 0;
 var map = []
-const animtime = .6;
+const animtime = .4;
 var size;
 var player;
 var actionvalid;
@@ -51,6 +51,7 @@ func _process(delta):
 				shootdir.x = -1;
 				actionTaken = true;
 			elif (Input.is_action_pressed("shoot_right")):
+				get_tree().change_scene("res://Level2.tscn")
 				shootdir.x = 1;
 				actionTaken = true;
 		else:

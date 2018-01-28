@@ -1,4 +1,4 @@
-extends TileMap
+extends Camera2D
 
 # class member variables go here, for example:
 # var a = 2
@@ -11,9 +11,3 @@ func _ready():
 	
 func _process(delta):
 	pass
-
-func onInitialCollide(movement):
-	return false
-
-func onPreCollide(id, movement):
-	return false
