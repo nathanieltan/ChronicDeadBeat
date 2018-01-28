@@ -4,7 +4,6 @@ extends Node2D
 # var a = 2
 # var b = "textvar"
 
-var moveArray = []
 var ind = 0;
 var kinebody
 var controller;
@@ -14,7 +13,9 @@ const dist = 16;
 const animTime = .4;
 var travelled = 0;
 var dir = Vector2(0.0, 0.0);
+var shootdir = Vector2(0.0, 0.0);
 var targ;
+var deadlyLazer = preload("res://laserTail.tscn")
 
 func _ready():
 	# Called every time the node is added to the scene.
@@ -40,8 +41,17 @@ func _process(delta):
 func PreCheck(playerPos): #playerPos is the future position of the player
 	if spawned:
 		targ = get_pos()/16
-		dir = IntToMove(moveArray[ind]);
-		var id = controller.CheckNode(targ + dir)
+		var ydiff = playerPos.y - get_pos().y
+		print("ydiff: ", ydiff)
+		if (abs(ydiff) < 1):
+			dir = Vector2(0.0, 0.0);
+			var xdiff = playerPos.x - get_pos().x;
+			shootdir = Vector2(sign(xdiff), 0.0);
+		else:
+			dir = Vector2(0.0, sign(ydiff));#IntToMove(moveArray[ind]);
+			shootdir = Vector2(0.0, 0.0);
+		#print ("wow: ", shootdir)
+		var id = controller.CheckNode(targ + dir);
 		var test = false;
 		if (typeof(id) == 2):
 			test = true;
@@ -56,13 +66,13 @@ func PreCheck(playerPos): #playerPos is the future position of the player
 			dir = Vector2(0.0, 0.0)
 			#return true
 	
-		ind += 1;
-		if (ind >= moveArray.size()):
-			ind = 0
 
 func TimeSpawn():
 	if (spawned):
-		travelled = 0
+		if (shootdir != Vector2(0.0, 0.0)):
+			CheckShoot(shootdir)
+		else:
+			travelled = 0
 	else:
 		get_node(".").hide()
 
@@ -151,6 +161,62 @@ func IntToMove(id):
 		
 		#INPUT SHOOTING ANIMATION HERE
 		return Vector2(0.0, 0.0)
+		
+func CheckShoot(shootdir):
+	#var anim = get_node("AnimationPlayer")
+	if shootdir == Vector2(1, 0):
+		#anim.play("shootRight")
+		#playerFacing = "right"
+		pass
+		
+	elif shootdir == Vector2(-1, 0):
+		#anim.play("shootLeft")		
+		#playerFacing = "left"
+		pass
+	
+	var checkhead = get_pos()
+	var laserspots = []
+	var orientation = []
+	while(true):
+		checkhead += shootdir * 16
+		var id = controller.CheckNode(checkhead/16);
+		var test = false;
+		if (typeof(id) == 2):
+			test = true;
+		elif (id.is_in_group("Button")):
+			test = true;
+		elif (id.is_in_group("Mirrors")):
+			test = true;
+			var tmpdir = Vector2Dir(shootdir)
+			var newdir = id.determine_bounce(tmpdir)
+			shootdir = Dir2Vector(newdir)
+			if (typeof(shootdir) == 2 and shootdir == 0):
+				test = false;
+		
+
+		if test:
+			laserspots.append(checkhead)
+			orientation.append(shootdir)
+			continue
+		else:
+			print(id)
+			if (id.is_in_group("Terrain") || id.is_in_group("Enemies") || id.is_in_group("Player")):
+				#id.TimeWait = controller.gunPower;
+				#controller.UpdateNode(0, id.get_pos()/16);
+				controller.Explode(id, get_node("."));
+			break;
+
+	for ind in range(laserspots.size()):
+		var laser = deadlyLazer.instance();
+		var dir = orientation[ind]
+		var dir_dic = {Vector2(0, 1): "Vertical", 
+			Vector2(1, 0): "Horizontal", 
+			Vector2(0, -1): "Vertical", 
+			Vector2(-1, 0): "Horizontal"}
+		laser.d_mode(dir_dic[dir])
+		get_parent().add_child(laser)
+		laser.set_global_pos(laserspots[ind])
+		print(laserspots[ind])
 
 func show_select_spikes(list_of_spikes):
 

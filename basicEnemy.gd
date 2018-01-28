@@ -4,7 +4,7 @@ extends Sprite
 # var a = 2
 # var b = "textvar"
 
-var moveArray = [0,-1,1,-1,2,-1,3,-1]
+#var moveArray = [0, 1]
 var ind = 0;
 var kinebody
 var controller;
@@ -41,24 +41,41 @@ func _process(delta):
 func PreCheck(playerPos): #playerPos is the future position of the player
 	if spawned:
 		targ = get_pos()/16
-		dir = IntToMove(moveArray[ind]);
-		var id = controller.CheckNode(targ + dir)
-		var test = false;
-		if (typeof(id) == 2):
-			test = true;
+		#dir = IntToMove(moveArray[ind]);
+		dir = Vector2(0.0, 0.0)
+		if ind == 0:
+			var diff = playerPos - get_pos();
+			var moveint = 0;
+			if abs(diff.x) > abs(diff.y):
+				if (sign(diff.x) == 1):
+					moveint = 1
+				else:
+					moveint = 3
+			else:
+				if (sign(diff.y) == -1):
+					moveint = 0
+				else:
+					moveint = 2
+			dir = IntToMove(moveint);
+			var id = controller.CheckNode(targ + dir)
+			var test = false;
+			if (typeof(id) == 2):
+				test = true;
+			else:
+				test = id.onPreCollide(1, get_node("."));
+		
+			if test:
+				targ += dir
+				controller.UpdateNode(0, get_pos()/16)
+				controller.UpdateNode(get_node("."), targ)
+			else:
+				dir = Vector2(0.0, 0.0)
+				#return true
 		else:
-			test = id.onPreCollide(1, get_node("."));
-	
-		if test:
-			targ += dir
-			controller.UpdateNode(0, get_pos()/16)
-			controller.UpdateNode(get_node("."), targ)
-		else:
-			dir = Vector2(0.0, 0.0)
-			#return true
-	
+			dir = IntToMove(-1);
+		
 		ind += 1;
-		if (ind >= moveArray.size()):
+		if (ind >= 2):
 			ind = 0
 
 func TimeSpawn():

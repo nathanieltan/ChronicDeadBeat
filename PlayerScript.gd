@@ -214,7 +214,7 @@ func CheckShoot(shootdir):
 		laser.d_mode(dir_dic[dir])
 		get_parent().add_child(laser)
 		laser.set_global_pos(laserspots[ind])
-		print(laserspots[ind])
+		#print(laserspots[ind])
 
 func Vector2Dir(vec):
 	var tmp = vec.normalized()

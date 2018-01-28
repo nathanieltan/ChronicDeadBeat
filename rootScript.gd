@@ -52,7 +52,7 @@ func _process(delta):
 				shootdir.x = -1;
 				actionTaken = true;
 			elif (Input.is_action_pressed("shoot_right")):
-				get_tree().change_scene("res://Level2.tscn")
+				#get_tree().change_scene("res://Level2.tscn")
 				shootdir.x = 1;
 				actionTaken = true;
 		else:
@@ -122,20 +122,28 @@ func Explode(node1, node2):
 	print(node1.get_name())
 	print(node2.get_name())
 	if (node1.is_in_group("Terrain") and node2.is_in_group("Terrain")):
+		UpdateNode(0, node1.get_pos())
+		UpdateNode(0, node2.get_pos())
 		node1.queue_free()
 		node2.queue_free()
 	elif(node1.is_in_group("Terrain") or node2.is_in_group("Terrain")):
 		if (node1.is_in_group("Enemies") or node1 == player):
+			UpdateNode(0, node1.get_pos())
 			node1.queue_free()
 		elif (node2.is_in_group("Enemies") or node2 == player):
+			UpdateNode(0, node2.get_pos())
 			node2.queue_free()
 	elif(node1.is_in_group("Enemies") and node2.is_in_group("Enemies")):
+		UpdateNode(0, node1.get_pos())
+		UpdateNode(0, node2.get_pos())
 		node1.queue_free()
 		node2.queue_free()
 	elif(node1.is_in_group("Enemies") or node2.is_in_group("Enemies")):
 		if (node1 == player):
+			UpdateNode(0, node1.get_pos())
 			node1.queue_free()
 		elif (node2 == player):
+			UpdateNode(0, node2.get_pos())
 			node2.queue_free()
 
 func _ready():
