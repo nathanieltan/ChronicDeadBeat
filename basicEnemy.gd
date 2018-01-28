@@ -98,13 +98,19 @@ func onPreCollide(id, player):
 		return false
 
 func IntToMove(id):
+	var animationPlayer = get_node("AnimationPlayer")
 	if (id == 0):
+		animationPlayer.play("ballUp")
 		return Vector2(0, -1)
 	if (id == 1):
+		animationPlayer.play("ballRight")
 		return Vector2(1, 0.0)
 	if (id == 2):
+		animationPlayer.play("ballDown")
 		return Vector2(0, 1)
 	if (id == 3):
+		animationPlayer.play("ballLeft")
 		return Vector2(-1, 0.0)
 	else:
+		animationPlayer.play("ballCharge")
 		return Vector2(0.0, 0.0)

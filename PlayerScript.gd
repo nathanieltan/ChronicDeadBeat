@@ -16,6 +16,8 @@ var dir = Vector2(0.0,0.0);
 var shootdir = Vector2(0.0, 0.0);
 var shot = false;
 var laserPiece = preload("res://laserHead.tscn")
+var playerFacing = "right";
+
 func _ready():
 	# Called every time the node is added to the scene.
 	# Initialization here
@@ -25,7 +27,14 @@ func _ready():
 	pass
 
 func _process(delta):
-	#print (move)
+	# Checks if the idle animation should play
+	if travelled >= dist:
+		var animationPlayer = get_node("AnimationPlayer")
+		if not animationPlayer.is_playing():
+			if playerFacing == "right":
+				animationPlayer.play("idleRight")
+			else:
+				animationPlayer.play("idleLeft")
 	controller.DepthChanger(get_node("."))
 	if (travelled < dist):
 		#print(travelled)
@@ -83,6 +92,21 @@ func PreCheck():
 	controller.UpdateNode(get_node("."), targ)
 	pass
 	
+
+	else:	# *********************************************************
+		# Controls Animations if Player Moves successfully
+		var animationPlayer = get_node("AnimationPlayer")
+		if move.x < 0:
+			animationPlayer.play("walkLeft")
+			playerFacing = "left"
+		elif move.x > 0:
+			animationPlayer.play("walkRight")
+			playerFacing = "right"
+		elif move.y != 0:
+			if playerFacing == "right":
+				animationPlayer.play("walkRight")
+			else:
+				animationPlayer.play("walkLeft")
 
 func TimeSpawn():
 	if (spawned):
@@ -152,11 +176,3 @@ func CheckShoot(shootdir):
 		
 	
 	
-	#print("me-sprite: ", kinebody.get_parent().get_global_pos());
-	#print("me-kinebody: ", kinebody.get_global_pos());
-	#print("me-collider: ", kinebody.get_node("CollisionPolygon2D").get_global_pos());
-	#print("me-size: ", kinebody.get_node("CollisionPolygon2D").get_scale());
-	#if (kinebody.is_colliding()):
-	#	var othernode = kinebody.get_collider().get_parent()
-	#	controller.Explode(get_node("."), othernode);
-	#	#othernode.onPostCollide(0, get_node("."))
