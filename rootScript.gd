@@ -76,6 +76,6 @@ func _ready():
 	# Initialization here
 	player = get_node("Player");
 	kinebody = get_node("Player/PlayerBody")
-	size = get_node("TileMap").get_cell_size()
+	size = get_node("UncollidingTileMap").get_cell_size()
 	scenetree = get_tree()
 	set_process(true)

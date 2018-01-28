@@ -1,0 +1,111 @@
+[gd_scene load_steps=2 format=1]
+
+[ext_resource path="res://images/terrain.png" type="Texture" id=1]
+
+[node name="Node2D" type="Node2D"]
+
+[node name="BlankFloor" type="Sprite" parent="."]
+
+transform/pos = Vector2( -4, 4 )
+texture = ExtResource( 1 )
+vframes = 4
+hframes = 8
+frame = 12
+
+[node name="VerticalUnpowered" type="Sprite" parent="."]
+
+transform/pos = Vector2( -36, 12 )
+texture = ExtResource( 1 )
+vframes = 4
+hframes = 8
+frame = 16
+
+[node name="TopLeftUnpowered" type="Sprite" parent="."]
+
+transform/pos = Vector2( 28, 12 )
+texture = ExtResource( 1 )
+vframes = 4
+hframes = 8
+frame = 17
+
+[node name="TopRightUnpowered" type="Sprite" parent="."]
+
+transform/pos = Vector2( 76, 12 )
+texture = ExtResource( 1 )
+vframes = 4
+hframes = 8
+frame = 18
+
+[node name="BottomLeftUnpowered" type="Sprite" parent="."]
+
+transform/pos = Vector2( 64, -20 )
+texture = ExtResource( 1 )
+vframes = 4
+hframes = 8
+frame = 19
+
+[node name="HorizontalUnpowered" type="Sprite" parent="."]
+
+transform/pos = Vector2( 16, -24 )
+texture = ExtResource( 1 )
+vframes = 4
+hframes = 8
+frame = 15
+
+[node name="BottomRightUnpowered" type="Sprite" parent="."]
+
+transform/pos = Vector2( -12, -28 )
+texture = ExtResource( 1 )
+vframes = 4
+hframes = 8
+frame = 20
+
+[node name="HorizontalPowered" type="Sprite" parent="."]
+
+transform/pos = Vector2( -40, -28 )
+texture = ExtResource( 1 )
+vframes = 4
+hframes = 8
+frame = 21
+
+[node name="VerticalPowered" type="Sprite" parent="."]
+
+transform/pos = Vector2( -56, 0 )
+texture = ExtResource( 1 )
+vframes = 4
+hframes = 8
+frame = 22
+
+[node name="TopLeftPowered" type="Sprite" parent="."]
+
+transform/pos = Vector2( -44, 40 )
+texture = ExtResource( 1 )
+vframes = 4
+hframes = 8
+frame = 23
+
+[node name="TopRightPowered" type="Sprite" parent="."]
+
+transform/pos = Vector2( -20, 56 )
+texture = ExtResource( 1 )
+vframes = 4
+hframes = 8
+frame = 24
+
+[node name="BottomLeftPowered" type="Sprite" parent="."]
+
+transform/pos = Vector2( 12, 40 )
+texture = ExtResource( 1 )
+vframes = 4
+hframes = 8
+frame = 25
+
+[node name="BottomRightPowered" type="Sprite" parent="."]
+
+transform/pos = Vector2( 64, 36 )
+texture = ExtResource( 1 )
+vframes = 4
+hframes = 8
+frame = 26
+
+

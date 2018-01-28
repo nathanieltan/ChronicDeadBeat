@@ -26,6 +26,7 @@ func _process(delta):
 func InitialCheck(movement):
 	kinebody.move(movement)
 	if kinebody.is_colliding():
+		print("Colliding")
 		return kinebody.get_collider().onInitialCollide(movement)
 	else:
 		return true;

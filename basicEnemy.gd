@@ -40,7 +40,7 @@ func PreCheck(playerPos): #playerPos is the future position of the player
 		kinebody.set_pos(Vector2(0.0, 0.0))
 		movement = Vector2(0.0, 0.0)
 	
-	print(movement)
+	#print(movement)
 	
 	ind += 1;
 	if (ind >= moveArray.size()):
