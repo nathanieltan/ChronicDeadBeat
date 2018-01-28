@@ -30,6 +30,7 @@ func _ready():
 	animationPlayer.play("teleportIn")
 
 func _process(delta):
+	print(get_global_pos())
 	# Checks if the idle animation should play
 	if (spawned):
 		if travelled >= dist:
@@ -160,6 +161,15 @@ func PostCheck():
 	targ = get_pos()/16
 
 func CheckShoot(shootdir):
+	var anim = get_node("AnimationPlayer")
+	if shootdir == Vector2(1, 0):
+		anim.play("shootRight")
+		playerFacing = "right"
+		
+	elif shootdir == Vector2(-1, 0):
+		anim.play("shootLeft")		
+		playerFacing = "left"
+	
 	var checkhead = get_pos()
 	var laserspots = []
 	var orientation = []
@@ -182,7 +192,7 @@ func CheckShoot(shootdir):
 
 		if test:
 			laserspots.append(checkhead)
-			orientation.append(1)
+			orientation.append(shootdir)
 			continue
 		else:
 			print("wowee")
@@ -196,6 +206,12 @@ func CheckShoot(shootdir):
 
 	for ind in range(laserspots.size()):
 		var laser = laserPiece.instance();
+		var dir = orientation[ind]
+		var dir_dic = {Vector2(0, 1): "Vertical", 
+			Vector2(1, 0): "Horizontal", 
+			Vector2(0, -1): "Vertical", 
+			Vector2(-1, 0): "Horizontal"}
+		laser.d_mode(dir_dic[dir])
 		get_parent().add_child(laser)
 		laser.set_global_pos(laserspots[ind])
 		print(laserspots[ind])
