@@ -161,7 +161,7 @@ transform/pos = Vector2( 0, 8 )
 texture = ExtResource( 1 )
 vframes = 5
 hframes = 8
-frame = 32
+frame = 39
 script/script = ExtResource( 2 )
 
 [node name="BasicEnemyBody" type="KinematicBody2D" parent="."]
@@ -203,6 +203,7 @@ autoplay = "ballCharge"
 texture = ExtResource( 3 )
 offset = Vector2( 0, -8 )
 hframes = 8
+frame = 7
 script/script = ExtResource( 4 )
 
 [node name="downSpike" type="Sprite" parent="."]
@@ -210,6 +211,7 @@ script/script = ExtResource( 4 )
 texture = ExtResource( 5 )
 offset = Vector2( 0, 16 )
 hframes = 8
+frame = 7
 script/script = ExtResource( 6 )
 
 [node name="leftSpike" type="Sprite" parent="."]
@@ -217,6 +219,7 @@ script/script = ExtResource( 6 )
 texture = ExtResource( 7 )
 offset = Vector2( -16, 4 )
 hframes = 8
+frame = 7
 script/script = ExtResource( 8 )
 
 [node name="rightSpike" type="Sprite" parent="."]
@@ -224,6 +227,7 @@ script/script = ExtResource( 8 )
 texture = ExtResource( 9 )
 offset = Vector2( 16, 4 )
 hframes = 8
+frame = 7
 script/script = ExtResource( 10 )
 
 

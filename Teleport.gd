@@ -31,13 +31,12 @@ func getState():
 	return active
 	
 func checkPlayerPos():
-	var mother = get_parent()
-	var granny = get_parent().get_parent()
-	var player_pos = Vector2(0, 0)
-	if granny.get_name() == "Game":
-		player_pos = granny.find_node("Player").get_global_pos()
-	elif mother.get_name() == "Game":
-		player_pos = mother.find_node("Player").get_global_pos()
+	var player_pos = get_owner().get_node("Player").get_pos()
+	#var player_pos = Vector2(0, 0)
+	#if granny.get_name() == "Game":
+	#	player_pos = granny.find_node("Player").get_global_pos()
+	#elif mother.get_name() == "Game":
+	#	player_pos = mother.find_node("Player").get_global_pos()
 	var pos = get_global_pos()
 	var offset = Vector2(0, -8)
 	var diff = pos - player_pos - offset

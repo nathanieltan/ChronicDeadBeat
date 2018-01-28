@@ -1,10 +1,10 @@
-extends Sprite
+extends Node2D
 
 # class member variables go here, for example:
 # var a = 2
 # var b = "textvar"
 
-var moveArray = [0,-1,1,-1,2,-1,3,-1]
+var moveArray = []
 var ind = 0;
 var kinebody
 var controller;
@@ -20,12 +20,11 @@ func _ready():
 	# Called every time the node is added to the scene.
 	# Initialization here
 	targ = get_pos()/16;
-	kinebody = get_node("BasicEnemyBody")
 	controller = get_parent()
 	set_process(true)
 	
 	var animationPlayer = get_node("AnimationPlayer")
-	animationPlayer.play("ballCharge")
+	#animationPlayer.play("ballCharge")
 
 func _process(delta):
 	if (spawned):
@@ -113,42 +112,44 @@ func onPreCollide(id, player):
 func IntToMove(id):
 	var animationPlayer = get_node("AnimationPlayer")
 	if (id == 0):
-		animationPlayer.play("ballUp")
-		show_select_spikes([])
+		#animationPlayer.play("ballUp")
+		#show_select_spikes([])
 		return Vector2(0, -1)
 	if (id == 1):
-		show_select_spikes([])
-		animationPlayer.play("ballRight")
+		#show_select_spikes([])
+		#animationPlayer.play("ballRight")
 		return Vector2(1, 0.0)
 	if (id == 2):
-		show_select_spikes([])
-		animationPlayer.play("ballDown")
+		#show_select_spikes([])
+		#animationPlayer.play("ballDown")
 		return Vector2(0, 1)
 	if (id == 3):
-		show_select_spikes([])
-		animationPlayer.play("ballLeft")
+		#show_select_spikes([])
+		#animationPlayer.play("ballLeft")
 		return Vector2(-1, 0.0)
 	else:
-		var up = controller.CheckNode(get_pos()/16 + Vector2(0.0, -1.0))
-		var right = controller.CheckNode(get_pos()/16 + Vector2(1.0, 0.0))
-		var down = controller.CheckNode(get_pos()/16 + Vector2(0.0, 1.0))
-		var left = controller.CheckNode(get_pos()/16 + Vector2(-1.0, 0.0))
-		var count = 1;
-		var animlist = []
-		for direction in [up, right, down, left]:
-			var test = false
-			if typeof(direction) == 2:
-				test = true
-			elif (direction.is_in_group("Button") || direction.is_in_group("Player")):
-				test = true
-				controller.Explode(direction, get_node("."))
-			
-			if test:
-				animlist.append(count)
-			count += 1;
+		#var up = controller.CheckNode(get_pos()/16 + Vector2(0.0, -1.0))
+		#var right = controller.CheckNode(get_pos()/16 + Vector2(1.0, 0.0))
+		#var down = controller.CheckNode(get_pos()/16 + Vector2(0.0, 1.0))
+		#var left = controller.CheckNode(get_pos()/16 + Vector2(-1.0, 0.0))
+		#var count = 1;
+		#var animlist = []
+		#for direction in [up, right, down, left]:
+		#	var test = false
+		#	if typeof(direction) == 2:
+		#		test = true
+		#	elif (direction.is_in_group("Button") || direction.is_in_group("Player")):
+		#		test = true
+		#		controller.Explode(direction, get_node("."))
+		#	
+		#	if test:
+		#		animlist.append(count)
+		#	count += 1;
 		
-		show_select_spikes(animlist)
-		animationPlayer.play("SpikesUDLR")
+		#show_select_spikes(animlist)
+		#animationPlayer.play("SpikesUDLR")
+		
+		#INPUT SHOOTING ANIMATION HERE
 		return Vector2(0.0, 0.0)
 
 func show_select_spikes(list_of_spikes):

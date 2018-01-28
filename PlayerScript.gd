@@ -187,7 +187,7 @@ func CheckShoot(shootdir):
 			var newdir = id.determine_bounce(tmpdir)
 			shootdir = Dir2Vector(newdir)
 			if (typeof(shootdir) == 2 and shootdir == 0):
-				test = true;
+				test = false;
 		
 
 		if test:
