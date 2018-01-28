@@ -21,6 +21,7 @@ func _ready():
 	set_process(true)
 	
 func _process(delta):
+	controller.DepthChanger(get_node("."))
 	if (travelled < dist):
 		var moveamount = min(movement.length() * delta / animTime, dist - travelled)
 		travelled += moveamount

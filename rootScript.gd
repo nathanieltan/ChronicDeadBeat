@@ -50,7 +50,6 @@ func _process(delta):
 		else:
 			actionSignal = false;
 		if not moving and lastmoving:
-			print("test1")
 			rerunsignal = true
 		else:
 			rerunsignal = false;
@@ -113,3 +112,6 @@ func _ready():
 	size = get_node("TileMap").get_cell_size()
 	scenetree = get_tree()
 	set_process(true)
+
+func DepthChanger(node):
+	node.set_z(node.get_pos().y);
