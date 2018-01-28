@@ -90,23 +90,24 @@ func PreCheck():
 		test = id.onPreCollide(0, dir);
 	controller.UpdateNode(0, get_pos()/16)
 	controller.UpdateNode(get_node("."), targ)
-	pass
-	
-
-	else:	# *********************************************************
-		# Controls Animations if Player Moves successfully
+	if test:
 		var animationPlayer = get_node("AnimationPlayer")
-		if move.x < 0:
+		if dir.x < 0:
 			animationPlayer.play("walkLeft")
 			playerFacing = "left"
-		elif move.x > 0:
+		elif dir.x > 0:
 			animationPlayer.play("walkRight")
 			playerFacing = "right"
-		elif move.y != 0:
+		elif dir.y != 0:
 			if playerFacing == "right":
 				animationPlayer.play("walkRight")
 			else:
 				animationPlayer.play("walkLeft")
+	pass
+	
+
+		# Controls Animations if Player Moves successfully
+		
 
 func TimeSpawn():
 	if (spawned):
