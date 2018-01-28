@@ -43,7 +43,7 @@ func PreCheck(playerPos): #playerPos is the future position of the player
 	
 	if not moveOk:
 		movement = Vector2(0.0, 0.0)
-	
+
 	ind += 1;
 	if (ind >= moveArray.size()):
 		ind = 0
