@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=1]
+[gd_scene load_steps=24 format=1]
 
 [ext_resource path="res://rootScript.gd" type="Script" id=1]
 [ext_resource path="res://uncollidingTiles.res" type="TileSet" id=2]
@@ -11,9 +11,10 @@
 [ext_resource path="res://playerBodyScript.gd" type="Script" id=9]
 [ext_resource path="res://icon.png" type="Texture" id=10]
 [ext_resource path="res://Pushable.tscn" type="PackedScene" id=11]
-[ext_resource path="res://victoyl3.gd" type="Script" id=12]
-[ext_resource path="res://Teleport.tscn" type="PackedScene" id=13]
-[ext_resource path="res://images/switchcombo1.png" type="Texture" id=14]
+[ext_resource path="res://BasicEnemy.tscn" type="PackedScene" id=12]
+[ext_resource path="res://victoyl4.gd" type="Script" id=13]
+[ext_resource path="res://Teleport.tscn" type="PackedScene" id=14]
+[ext_resource path="res://images/switchcombo1.png" type="Texture" id=15]
 
 [sub_resource type="ConvexPolygonShape2D" id=1]
 
@@ -154,7 +155,7 @@ collision/bounce = 0.0
 collision/layers = 1
 collision/mask = 1
 occluder/light_mask = 1
-tile_data = IntArray( 458769, 0, 458770, 0, 458771, 0, 524304, 0, 524305, 0, 524306, 0, 524307, 0, 524308, 0, 589839, 1, 589840, 0, 589841, 0, 589842, 0, 589843, 0, 589844, 0, 589845, 0, 655375, 1, 655376, 0, 655377, 0, 655378, 0, 655379, 0, 655380, 0, 655381, 0, 720914, 0, 786450, 0, 851986, 0, 917520, 0, 917521, 0, 917522, 0, 917523, 0, 917524, 1, 983056, 0, 983057, 0, 983058, 0, 983059, 0, 983060, 4, 1048592, 0, 1048593, 0, 1048594, 0, 1048595, 0, 1048596, 0, 1114128, 5, 1114129, 3, 1114130, 0, 1114131, 0, 1114132, 0, 1179665, 1, 1179666, 0, 1179667, 0 )
+tile_data = IntArray( 65554, 0, 131090, 0, 196626, 0, 196627, 0, 262163, 2, 327699, 4, 393233, 0, 393234, 0, 393235, 0, 393236, 0, 458769, 0, 458770, 0, 458771, 0, 458772, 0, 524305, 0, 524308, 0, 589841, 0, 589844, 0, 655377, 0, 655380, 0, 720913, 0, 720914, 0, 720915, 0, 720916, 0, 786449, 0, 786450, 0, 786451, 0, 786452, 2, 851986, 0, 917522, 0, 983058, 0, 983059, 0, 1048595, 0, 1114131, 0, 1179665, 3, 1179666, 0, 1179667, 0, 1179668, 0, 1245202, 0, 1245203, 0 )
 
 [node name="CollidingTileMap" type="TileMap" parent="."]
 
@@ -172,7 +173,7 @@ collision/bounce = 0.0
 collision/layers = 1
 collision/mask = 1
 occluder/light_mask = 1
-tile_data = IntArray( 327696, 0, 327697, 2, 327698, 2, 327699, 2, 327700, 1, 393231, 0, 393232, 11, 393233, 12, 393234, 12, 393235, 12, 393236, 10, 393237, 1, 458766, 0, 458767, 11, 458768, 12, 458772, 12, 458773, 10, 458774, 1, 524302, 3, 524303, 14, 524309, 12, 524310, 4, 589838, 3, 589846, 4, 655374, 3, 655382, 4, 720910, 7, 720911, 5, 720912, 5, 720913, 8, 720915, 9, 720916, 5, 720917, 5, 720918, 6, 786447, 0, 786448, 2, 786449, 11, 786451, 10, 786452, 2, 786453, 1, 851983, 3, 851984, 12, 851985, 12, 851987, 12, 851988, 12, 851989, 4, 917519, 3, 917525, 4, 983055, 3, 983061, 4, 1048591, 3, 1048597, 4, 1114127, 3, 1114133, 4, 1179663, 7, 1179664, 8, 1179668, 9, 1179669, 6, 1245200, 7, 1245201, 5, 1245202, 5, 1245203, 5, 1245204, 6 )
+tile_data = IntArray( -65519, 0, -65518, 2, -65517, 1, 17, 3, 18, 12, 19, 4, 65553, 3, 65555, 10, 65556, 1, 131089, 3, 131091, 12, 131092, 4, 196625, 3, 196628, 4, 262161, 7, 262162, 8, 262164, 10, 262165, 1, 327696, 3, 327697, 12, 327698, 12, 327700, 12, 327701, 4, 393232, 3, 393237, 4, 458768, 3, 458773, 4, 524304, 3, 524306, 9, 524307, 8, 524309, 4, 589840, 3, 589842, 10, 589843, 11, 589845, 4, 655376, 3, 655378, 12, 655379, 12, 655381, 4, 720912, 3, 720917, 4, 786448, 3, 786453, 4, 851984, 7, 851985, 8, 851987, 9, 851988, 5, 851989, 6, 917521, 3, 917523, 12, 917524, 4, 983057, 3, 983060, 4, 1048593, 7, 1048594, 8, 1048596, 10, 1048597, 1, 1114128, 3, 1114129, 12, 1114130, 12, 1114132, 12, 1114133, 4, 1179664, 3, 1179669, 4, 1245200, 7, 1245201, 8, 1245204, 9, 1245205, 6, 1310737, 7, 1310738, 5, 1310739, 5, 1310740, 6 )
 script/script = ExtResource( 4 )
 
 [node name="laserHead" parent="." instance=ExtResource( 5 )]
@@ -185,7 +186,7 @@ transform/pos = Vector2( 264, 248 )
 "Player",
 ]]
 
-transform/pos = Vector2( 296, 280 )
+transform/pos = Vector2( 312, 312 )
 texture = ExtResource( 6 )
 offset = Vector2( 0, -8 )
 vframes = 10
@@ -216,6 +217,7 @@ script/script = ExtResource( 8 )
 
 [node name="PlayerBody" type="KinematicBody2D" parent="Player"]
 
+visibility/visible = false
 input/pickable = false
 shapes/0/shape = SubResource( 1 )
 shapes/0/transform = Matrix32( 1, 0, 0, 1, 0, 8 )
@@ -256,36 +258,32 @@ playback/speed = 1.0
 blend_times = [  ]
 autoplay = "idleRight"
 
-[node name="Important Things" type="Node2D" parent="."]
-
-[node name="Pushable" parent="." instance=ExtResource( 11 )]
-
-transform/pos = Vector2( 296, 220 )
-offset = Vector2( 0, -12 )
-
-[node name="Pushable1" parent="." instance=ExtResource( 11 )]
-
-transform/pos = Vector2( 296, 204 )
-offset = Vector2( 0, -12 )
-
 [node name="Pushable2" parent="." instance=ExtResource( 11 )]
 
-transform/pos = Vector2( 296, 188 )
+transform/pos = Vector2( 280, 300 )
 offset = Vector2( 0, -12 )
 
-[node name="VictoryL3" type="Node2D" parent="."]
+[node name="BasicEnemy" parent="." instance=ExtResource( 12 )]
 
-script/script = ExtResource( 12 )
+transform/pos = Vector2( 280, 96 )
 
-[node name="Teleport" parent="VictoryL3" instance=ExtResource( 13 )]
+[node name="BasicEnemy1" parent="." instance=ExtResource( 12 )]
 
-transform/pos = Vector2( 296, 112 )
+transform/pos = Vector2( 328, 96 )
 
-[node name="Tiles" type="Sprite" parent="VictoryL3"]
+[node name="VictoryL4" type="Node2D" parent="."]
+
+script/script = ExtResource( 13 )
+
+[node name="Teleport" parent="VictoryL4" instance=ExtResource( 14 )]
+
+transform/pos = Vector2( 296, 16 )
+
+[node name="Tiles" type="Sprite" parent="VictoryL4"]
 
 visibility/visible = false
 transform/pos = Vector2( 280, 144 )
-texture = ExtResource( 14 )
+texture = ExtResource( 15 )
 
 [node name="TileMap" type="TileMap" parent="."]
 

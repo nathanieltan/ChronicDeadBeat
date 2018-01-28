@@ -1,10 +1,10 @@
 extends Node2D
-var next_level = "res://Level2.tscn"
 
 # class member variables go here, for example:
 # var a = 2
 # var b = "textvar"
-var next_level = "res://Levels/Level2.tscn"
+
+var next_level = "res://Levels/Level4.tscn"
 
 func _ready():
 	var tp = find_node("Teleport")
