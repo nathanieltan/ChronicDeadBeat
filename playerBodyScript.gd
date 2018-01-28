@@ -10,9 +10,4 @@ func _ready():
 	pass
 
 
-func onPreCollide(id, movement):
-	if (id == 0):
-		print("WHAT???!?!?!?!")
-	elif(id == 1):
-		return true
 

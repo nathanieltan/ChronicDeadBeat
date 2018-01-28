@@ -4,6 +4,7 @@ extends Node2D
 # var a = 2
 # var b = "textvar"
 var dir = Vector2(0.0, 0.0)
+var shootdir = Vector2(0.0, 0.0)
 var actionTaken = false;
 var actionprev = false;
 var actionSignal = false;
@@ -11,15 +12,20 @@ var moving = false;
 var lastmoving = false;
 var rerunsignal = false;
 var timer = 0;
+var map = []
 const animtime = .6;
 var size;
 var player;
 var actionvalid;
 var scenetree;
 var kinebody
+var allObjects;
+var collidingTileMap;
+var uncollidingTileMap;
 
 func _process(delta):
 	dir = Vector2(0.0, 0.0)
+	shootdir = Vector2(0.0, 0.0)
 	actionprev = actionTaken
 	if not moving:
 		if not actionTaken:
@@ -35,15 +41,31 @@ func _process(delta):
 			elif (Input.is_action_pressed("move_left")):
 				dir.x = -1;
 				actionTaken = true;
-			elif (Input.is_action_pressed("shoot")):
-				get_node("laserHead").shoot("up")
+			elif (Input.is_action_pressed("shoot_down")):
+				shootdir.y = 1;
+				actionTaken = true;
+			elif (Input.is_action_pressed("shoot_up")):
+				shootdir.y = -1;
+				actionTaken = true;
+			elif (Input.is_action_pressed("shoot_left")):
+				shootdir.x = -1;
+				actionTaken = true;
+			elif (Input.is_action_pressed("shoot_right")):
+				shootdir.x = 1;
 				actionTaken = true;
 		else:
-			if not (Input.is_action_pressed("move_down") or Input.is_action_pressed("shoot") or Input.is_action_pressed("move_up") or Input.is_action_pressed("move_right") or Input.is_action_pressed("move_left")):
+			if not (Input.is_action_pressed("move_down") 
+			or Input.is_action_pressed("move_up")
+			or Input.is_action_pressed("move_right")
+			or Input.is_action_pressed("move_left")
+			or Input.is_action_pressed("shoot_up")
+			or Input.is_action_pressed("shoot_down")
+			or Input.is_action_pressed("shoot_left")
+			or Input.is_action_pressed("shoot_right")):
 				actionTaken = false;
 		
 		# DO PRE COLLISION CHECKING PROCEDURE FOR WHETHER TURN SHOULD BE TAKEN
-		var movement = dir*size
+		var movement = dir
 		
 		if actionTaken and not actionprev:
 			actionSignal = true;
@@ -56,12 +78,14 @@ func _process(delta):
 		lastmoving = moving;
 		
 		if actionSignal:
-			actionvalid = player.InitialCheck(movement)
+			actionvalid = player.InitialCheck(movement, shootdir)
 			
 		if (actionvalid):
 			# DO PRECHECKING PROCEDURE FOR ALL MOVING OBJECT
+			scenetree.call_group(0, "Terrain", "PreCheck")
 			player.PreCheck();
 			scenetree.call_group(0, "Enemies", "PreCheck", kinebody.get_global_pos())
+			
 			
 			# DO SPAWNING PROCEDURE
 			scenetree.call_group(0, "Terrain", "TimeSpawn")
@@ -98,10 +122,18 @@ func Explode(node1, node2):
 	if (node1.is_in_group("Terrain") and node2.is_in_group("Terrain")):
 		node1.queue_free()
 		node2.queue_free()
-	else:
+	elif(node1.is_in_group("Terrain") or node2.is_in_group("Terrain")):
 		if (node1.is_in_group("Enemies") or node1 == player):
 			node1.queue_free()
 		elif (node2.is_in_group("Enemies") or node2 == player):
+			node2.queue_free()
+	elif(node1.is_in_group("Enemies") and node2.is_in_group("Enemies")):
+		node1.queue_free()
+		node2.queue_free()
+	elif(node1.is_in_group("Enemies") or node2.is_in_group("Enemies")):
+		if (node1 == player):
+			node1.queue_free()
+		elif (node2 == player):
 			node2.queue_free()
 
 func _ready():
@@ -109,9 +141,47 @@ func _ready():
 	# Initialization here
 	player = get_node("Player");
 	kinebody = get_node("Player/PlayerBody")
-	size = get_node("UncollidingTileMap").get_cell_size()
+	collidingTileMap = get_node("CollidingTileMap")
+	uncollidingTileMap = get_node("UncollidingTileMap")
+	size = uncollidingTileMap.get_cell_size()
+	
 	scenetree = get_tree()
+	InitNodes()
 	set_process(true)
 
 func DepthChanger(node):
 	node.set_z(node.get_pos().y);
+	
+#==================================================================#
+
+func InitNodes():
+	
+	# 0 - floor; 1 - wall; non-int - object node
+	
+	for x in range (125):
+		map.append([])
+		for y in range(125):
+			map[x].append(0)
+	map[player.get_pos().x/16][player.get_pos().y/16] = player;
+	
+	for item in scenetree.get_nodes_in_group("Enemies"):
+		map[item.get_pos().x/16][item.get_pos().y/16] = item;
+		
+	for item in scenetree.get_nodes_in_group("Terrain"):
+		map[item.get_pos().x/16][item.get_pos().y/16] = item;
+	
+	for item in scenetree.get_nodes_in_group("Pushable"):
+		map[item.get_pos().x/16][item.get_pos().y/16] = item;
+		
+	for item in collidingTileMap.get_used_cells():
+		map[item[0]][item[1]] = collidingTileMap;
+	
+	
+
+func CheckNode(pos):
+	return map[pos.x][pos.y];
+
+func UpdateNode(id, pos):
+	map[pos.x][pos.y] = id;
+	pass #node
+	
