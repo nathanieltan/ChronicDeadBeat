@@ -7,7 +7,7 @@ var TimeWait = 0;
 var spawned = false;
 const dist = 16;
 const animTime = .4;
-var travelled = 0;
+var travelled = 16;
 var move = Vector2(0.0, 0.0);
 var kinebody;
 var controller;
@@ -18,7 +18,9 @@ func _ready():
 	controller = get_parent();
 	kinebody = get_node("PlayerBody")
 	set_process(true)
-	pass
+	
+	var animationPlayer = get_node("AnimationPlayer")
+	animationPlayer.play("teleportIn")
 
 func _process(delta):
 	# Checks if the idle animation should play

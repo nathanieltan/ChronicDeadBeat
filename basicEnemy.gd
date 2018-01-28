@@ -31,7 +31,6 @@ func _process(delta):
 		kinebody.move_to(get_global_pos())
 	else:
 		set_pos(get_pos().snapped(Vector2(4,4)))
-	
 
 func PreCheck(playerPos): #playerPos is the future position of the player
 	
@@ -69,16 +68,44 @@ func IntToMove(id):
 	var animationPlayer = get_node("AnimationPlayer")
 	if (id == 0):
 		animationPlayer.play("ballUp")
+		show_select_spikes([])
 		return Vector2(0, -16.0)
 	if (id == 1):
 		animationPlayer.play("ballRight")
+		show_select_spikes([])
 		return Vector2(16.0, 0.0)
 	if (id == 2):
 		animationPlayer.play("ballDown")
+		show_select_spikes([])
 		return Vector2(0, 16.0)
 	if (id == 3):
 		animationPlayer.play("ballLeft")
+		show_select_spikes([])
 		return Vector2(-16.0, 0.0)
 	else:
-		animationPlayer.play("ballCharge")
+		animationPlayer.play("SpikesUDLR")
 		return Vector2(0.0, 0.0)
+		
+func show_select_spikes(list_of_spikes):
+	
+	var up = get_node("upSpike")
+	var right = get_node("rightSpike")
+	var down = get_node("downSpike")
+	var left = get_node("leftSpike")
+	
+	if 1 in list_of_spikes:	
+		up.show_spike()
+	else:
+		up.hide_spike()
+	if 2 in list_of_spikes:
+		right.show_spike()
+	else:
+		right.hide_spike()
+	if 3 in list_of_spikes:
+		down.show_spike()
+	else:
+		down.hide_spike()
+	if 4 in list_of_spikes:
+		left.show_spike()
+	else:
+		left.hide_spike()
