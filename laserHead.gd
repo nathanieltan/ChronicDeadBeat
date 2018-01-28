@@ -29,6 +29,7 @@ func shoot(dir):
 			var collidedNode = kinebody.get_collider()
 			if(collidedNode.get_name() == "TileMap"):
 				kinebody.set_pos(Vector2(0.0,0.0))
+				kinebody.move_to(get_global_pos())
 				moveSprite = false
 		if moveSprite:
 			set_pos(get_pos() + moveAmount)

@@ -5,6 +5,7 @@ extends KinematicBody2D
 # var b = "textvar"
 var id = 1;
 var parent;
+var movevar = Vector2(0.0, 0.0)
 func _ready():
 	# Called every time the node is added to the scene.
 	# Initialization here
@@ -16,19 +17,21 @@ func onInitialCollide(movement):
 	if not is_colliding():
 		return true;
 	else:
+		set_pos(Vector2(0.0, 0.0));
 		return false;
 	
 func onPreCollide(id, movement):
 	if (id == 0): #player
-		move(movement);
 		if not is_colliding():
-			parent.set_pos(parent.get_pos() + movement)
-			set_pos(Vector2(0.0, 0.0))
+			movevar = movement;
+			parent.travelled = 0;
 			return true
 		else:
-			set_pos(Vector2(0.0, 0.0))
+			print("wowow2")
+			movevar = Vector2(0.0, 0.0)
 			return false;
 	elif (id == 1):
 		return false
 
-
+func onPostCollide(id, node):
+	pass

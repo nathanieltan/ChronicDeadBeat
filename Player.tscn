@@ -54,11 +54,10 @@ collision/bounce = 0.0
 collision/layers = 1
 collision/mask = 1
 occluder/light_mask = 1
-tile_data = IntArray( 458769, 0, 524303, 0, 524304, 1, 524305, 0, 524306, 0, 524307, 0, 589838, 0, 589839, 0, 589840, 1, 589841, 0, 589842, 0, 589843, 0, 589844, 0, 655374, 0, 655375, 0, 655376, 0, 655377, 0, 655378, 0, 655379, 0, 655380, 0, 720910, 0, 720911, 0, 720912, 0, 720913, 0, 720914, 0, 720915, 0, 720916, 0, 786446, 0, 786447, 0, 786448, 0, 786449, 0, 786450, 0, 786451, 0, 786452, 0, 851982, 0, 851983, 0, 851984, 0, 851985, 0, 851986, 0, 851987, 0, 851988, 0, 917518, 0, 917519, 0, 917520, 0, 917521, 0, 917522, 0, 917523, 0, 917524, 0, 983054, 0, 983055, 0, 983056, 0, 983057, 0, 983058, 0, 983059, 0, 983060, 0, 1048592, 0, 1048593, 0, 1048594, 0 )
+tile_data = IntArray( 458770, 0, 524305, 0, 524306, 0, 524307, 0, 589839, 0, 589840, 0, 589841, 0, 589842, 0, 589843, 0, 589844, 1, 589845, 0, 655375, 0, 655376, 0, 655377, 0, 655378, 0, 655379, 0, 655380, 1, 655381, 0, 720911, 0, 720912, 0, 720913, 0, 720914, 0, 720915, 0, 720916, 0, 720917, 0, 786447, 0, 786448, 0, 786449, 0, 786450, 0, 786451, 0, 786452, 0, 786453, 0, 851983, 0, 851984, 0, 851985, 0, 851986, 0, 851987, 0, 851988, 0, 851989, 0, 917519, 0, 917520, 0, 917521, 0, 917522, 0, 917523, 0, 917524, 0, 917525, 0, 983057, 0, 983058, 0, 983059, 0 )
 
 [node name="CollidingTileMap" type="TileMap" parent="."]
 
-transform/pos = Vector2( 0, 32 )
 mode = 0
 tile_set = ExtResource( 3 )
 cell/size = Vector2( 16, 16 )
@@ -73,7 +72,7 @@ collision/bounce = 0.0
 collision/layers = 1
 collision/mask = 1
 occluder/light_mask = 1
-tile_data = IntArray( 196624, 0, 196625, 2, 196626, 1, 262158, 0, 262159, 2, 262160, 11, 262161, 12, 262162, 10, 262163, 2, 262164, 1, 327693, 0, 327694, 11, 327695, 12, 327696, 12, 327698, 12, 327699, 12, 327700, 10, 327701, 1, 393229, 3, 393230, 12, 393231, 29, 393236, 12, 393237, 4, 458765, 3, 458773, 4, 524301, 3, 524309, 4, 589837, 3, 589845, 4, 655373, 3, 655381, 4, 720909, 3, 720917, 4, 786445, 3, 786453, 4, 851981, 3, 851989, 4, 917517, 7, 917518, 5, 917519, 8, 917523, 9, 917524, 5, 917525, 6, 983055, 7, 983056, 5, 983057, 5, 983058, 5, 983059, 6 )
+tile_data = IntArray( 327697, 0, 327698, 2, 327699, 1, 393232, 0, 393233, 11, 393234, 12, 393235, 10, 393236, 1, 458766, 0, 458767, 2, 458768, 11, 458769, 12, 458771, 12, 458772, 10, 458773, 2, 458774, 1, 524302, 3, 524303, 12, 524304, 12, 524308, 12, 524309, 12, 524310, 4, 589838, 3, 589846, 4, 655374, 3, 655382, 4, 720910, 3, 720918, 4, 786446, 3, 786454, 4, 851982, 3, 851990, 4, 917518, 3, 917526, 4, 983054, 7, 983055, 5, 983056, 8, 983060, 9, 983061, 5, 983062, 6, 1048592, 7, 1048593, 5, 1048594, 5, 1048595, 5, 1048596, 6 )
 script/script = ExtResource( 4 )
 
 [node name="Player" type="Sprite" parent="." groups=[
@@ -90,7 +89,7 @@ script/script = ExtResource( 6 )
 visibility/visible = false
 input/pickable = false
 shapes/0/shape = SubResource( 1 )
-shapes/0/transform = Matrix32( 1, 0, 0, 1, 0, 0 )
+shapes/0/transform = Matrix32( 1, 0, 0, 1, 0, 8 )
 shapes/0/trigger = false
 collision/layers = 1
 collision/mask = 1
@@ -99,12 +98,13 @@ script/script = ExtResource( 7 )
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Player/PlayerBody"]
 
+transform/pos = Vector2( 0, 8 )
 build_mode = 0
 polygon = Vector2Array( -4, 4, -4, -4, 4, -4, 4, 4 )
 shape_range = Vector2( 0, 0 )
 trigger = false
 
-[node name="DebugSprite" type="Sprite" parent="Player/PlayerBody"]
+[node name="DebugSprite" type="Sprite" parent="Player/PlayerBody/CollisionPolygon2D"]
 
 transform/scale = Vector2( 0.1, 0.1 )
 texture = ExtResource( 8 )
@@ -133,25 +133,11 @@ texture = ExtResource( 8 )
 
 [node name="BasicEnemy" parent="." instance=ExtResource( 10 )]
 
-editor/display_folded = true
 transform/pos = Vector2( 296, 160 )
-
-[node name="DebugSprite3" type="Sprite" parent="BasicEnemy"]
-
-visibility/visible = false
-transform/scale = Vector2( 0.1, 0.1 )
-texture = ExtResource( 8 )
 
 [node name="BasicEnemy1" parent="." instance=ExtResource( 10 )]
 
-editor/display_folded = true
 transform/pos = Vector2( 264, 160 )
-
-[node name="DebugSprite4" type="Sprite" parent="BasicEnemy1"]
-
-visibility/visible = false
-transform/scale = Vector2( 0.1, 0.1 )
-texture = ExtResource( 8 )
 
 [node name="Camera2D" type="Camera2D" parent="."]
 
@@ -176,7 +162,8 @@ drag_margin/bottom = 0.2
 
 [node name="Pushable" parent="." instance=ExtResource( 11 )]
 
-transform/pos = Vector2( 312, 208 )
+transform/pos = Vector2( 328, 192 )
 
 
 [editable path="laserHead"]
+[editable path="Pushable"]

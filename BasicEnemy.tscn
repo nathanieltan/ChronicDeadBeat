@@ -9,7 +9,7 @@
 custom_solver_bias = 0.0
 points = Vector2Array( -4, 4, -4, -4, 4, -4, 4, 4 )
 
-[sub_resource type="Animation" id=6]
+[sub_resource type="Animation" id=2]
 
 resource/name = "ballCharge"
 length = 1.0
@@ -26,9 +26,8 @@ tracks/0/keys = {
 "values": [ 32, 33, 34, 35, 36, 37, 38, 39 ]
 }
 
-[sub_resource type="Animation" id=2]
+[sub_resource type="Animation" id=3]
 
-resource/name = "ballDown"
 length = 1.0
 loop = true
 step = 0.13
@@ -77,9 +76,8 @@ tracks/0/keys = {
 "values": [ 24, 25, 26, 27, 28, 29, 30, 31 ]
 }
 
-[sub_resource type="Animation" id=3]
+[sub_resource type="Animation" id=6]
 
-resource/name = "ballUp"
 length = 1.0
 loop = true
 step = 0.13
@@ -108,7 +106,7 @@ script/script = ExtResource( 2 )
 
 input/pickable = false
 shapes/0/shape = SubResource( 1 )
-shapes/0/transform = Matrix32( 1, 0, 0, 1, 0, 0 )
+shapes/0/transform = Matrix32( 1, 0, 0, 1, 0, 8 )
 shapes/0/trigger = false
 collision/layers = 1
 collision/mask = 1
@@ -117,6 +115,7 @@ script/script = ExtResource( 3 )
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="BasicEnemyBody"]
 
+transform/pos = Vector2( 0, 8 )
 build_mode = 0
 polygon = Vector2Array( -4, 4, -4, -4, 4, -4, 4, 4 )
 shape_range = Vector2( 0, 0 )
@@ -127,11 +126,11 @@ trigger = false
 playback/process_mode = 1
 playback/default_blend_time = 0.0
 root/root = NodePath("..")
-anims/ballCharge = SubResource( 6 )
-anims/ballDown = SubResource( 2 )
+anims/ballCharge = SubResource( 2 )
+anims/ballDown = SubResource( 3 )
 anims/ballLeft = SubResource( 4 )
 anims/ballRight = SubResource( 5 )
-anims/ballUp = SubResource( 3 )
+anims/ballUp = SubResource( 6 )
 playback/active = true
 playback/speed = 1.0
 blend_times = [  ]
