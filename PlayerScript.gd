@@ -4,7 +4,7 @@ extends Sprite
 # var a = 2
 # var b = "textvar"
 var TimeWait = 0;
-var spawned = false;
+var spawned = true;
 const dist = 16;
 const animTime = .4;
 var travelled = 16;
@@ -14,13 +14,14 @@ var controller;
 var targ;
 var dir = Vector2(0.0,0.0);
 var shootdir = Vector2(0.0, 0.0);
-var shot = false;
+var shot = true;
 var laserPiece = preload("res://laserHead.tscn")
 var playerFacing = "right";
 
 func _ready():
 	# Called every time the node is added to the scene.
 	# Initialization here
+	targ = get_global_pos()
 	controller = get_parent();
 	kinebody = get_node("PlayerBody")
 	set_process(true)
@@ -30,30 +31,30 @@ func _ready():
 
 func _process(delta):
 	# Checks if the idle animation should play
-	if travelled >= dist:
-		var animationPlayer = get_node("AnimationPlayer")
-		if not animationPlayer.is_playing():
-			if playerFacing == "right":
-				animationPlayer.play("idleRight")
-			else:
-				animationPlayer.play("idleLeft")
-	controller.DepthChanger(get_node("."))
-	if (travelled < dist):
-		#print(travelled)
-		var moveamount = min(16 * delta / animTime, dist - travelled)
-		travelled += moveamount
-		set_pos(get_pos() + dir.clamped(1) * moveamount)
-		if (controller.timer > animTime / 2 and not shot):
-			shot = true
-			#shoot gun
-			print (shot)
-		#kinebody.move(0.0, 0.0);
-		#kinebody.move_to(get_global_pos())
-	else:
-		set_pos(get_pos().snapped(Vector2(4,4)))
-		shot = false
+	if (spawned):
+		if travelled >= dist:
+			var animationPlayer = get_node("AnimationPlayer")
+			if not animationPlayer.is_playing():
+				if playerFacing == "right":
+					animationPlayer.play("idleRight")
+				else:
+					animationPlayer.play("idleLeft")
+		controller.DepthChanger(get_node("."))
+		if (travelled < dist):
+			#print(travelled)
+			var moveamount = min(16 * delta / animTime, dist - travelled)
+			travelled += moveamount
+			set_pos(get_pos() + dir.clamped(1) * moveamount)
+		
+			#kinebody.move(0.0, 0.0);
+			#kinebody.move_to(get_global_pos())
+		else:
+			set_pos(get_pos().snapped(Vector2(4,4)))
+			shot = false
 
 func InitialCheck(movement, shootingdirection):
+	if (not spawned):
+		return true
 	#kinebody.move(movement)
 	shootdir = shootingdirection;
 	targ = get_pos()/16
@@ -73,6 +74,8 @@ func InitialCheck(movement, shootingdirection):
 
 
 func PreCheck():
+	if not spawned:
+		return
 	#kinebody.set_pos(Vector2(0.0,0.0))
 	#kinebody.move(move)
 	#move = movement
@@ -88,8 +91,8 @@ func PreCheck():
 	if (typeof(id) == 2):
 		test = true;
 	else:
-		print(dir)
-		test = id.onPreCollide(0, dir);
+		test = id.onPreCollide(0, dir)
+		pass
 	controller.UpdateNode(0, get_pos()/16)
 	controller.UpdateNode(get_node("."), targ)
 	if test:
@@ -117,15 +120,23 @@ func TimeSpawn():
 			CheckShoot(shootdir)
 		else:
 			travelled = 0
+	else:
+		get_node(".").hide()
 
 	if (TimeWait > 0):
 		TimeWait -= 1;
 		targ = get_pos()/16;
 	elif (not spawned and TimeWait == 0):
-		var underitem = controller.CheckNode(targ/16)
+		get_node(".").show()
+		var underitem = controller.CheckNode(targ)
+		var tmpbool = true;
 		if (typeof(underitem) == 2):
 			pass
 		elif (not underitem.is_in_group("Button")):
+			tmpbool = false;
+		if tmpbool:
+			controller.UpdateNode(get_node("."), targ)
+		else:
 			controller.Explode(get_node("."), underitem)
 		spawned = true;
 		travelled = 0;
@@ -133,12 +144,12 @@ func TimeSpawn():
 	#kinebody.set_pos(Vector2(0.0,0.0))
 
 func onInitialCollide(id):
-		print("stayed in place")
+		#print("stayed in place")
 		return true
 
 func onPreCollide(id, dir):
 	if (id == 0):
-		print("stayed in place")
+		#print("stayed in place")
 		return true
 	elif(id == 1):
 		controller.Explode(get_node("."), dir)
@@ -160,14 +171,27 @@ func CheckShoot(shootdir):
 			test = true;
 		elif (id.is_in_group("Button")):
 			test = true;
-
+		elif (id.is_in_group("Mirrors")):
+			test = true;
+			var tmpdir = Vector2Dir(shootdir)
+			var newdir = id.determine_bounce(tmpdir)
+			shootdir = Dir2Vector(newdir)
+			if (typeof(shootdir) == 2 and shootdir == 0):
+				test = true;
+		
 
 		if test:
 			laserspots.append(checkhead)
 			orientation.append(1)
 			continue
 		else:
+			print("wowee")
 			print(id)
+			if (id.is_in_group("Terrain") || id.is_in_group("Enemies") || id == get_node(".")):
+				print("wowoiwoiw")
+				id.TimeWait = controller.gunPower;
+				controller.UpdateNode(0, id.get_pos()/16);
+				id.spawned = false;
 			break;
 
 	for ind in range(laserspots.size()):
@@ -175,3 +199,29 @@ func CheckShoot(shootdir):
 		get_parent().add_child(laser)
 		laser.set_global_pos(laserspots[ind])
 		print(laserspots[ind])
+
+func Vector2Dir(vec):
+	var tmp = vec.normalized()
+	if tmp.y < -.1:
+		return 3
+	if tmp.x > .1:
+		return 4
+	if tmp.y >= .1:
+		return 1
+	if tmp.x <= -.1:
+		return 2
+	else:
+		return 0;
+		
+	
+func Dir2Vector(dir):
+	if dir == 1:
+		return Vector2(0.0, -1.0)
+	if dir == 2:
+		return Vector2(1.0, 0.0)
+	if dir == 3:
+		return Vector2(0.0, 1.0)
+	if dir == 4:
+		return Vector2(-1.0, 0.0)
+	else:
+		return 0;

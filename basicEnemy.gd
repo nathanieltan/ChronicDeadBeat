@@ -9,7 +9,7 @@ var ind = 0;
 var kinebody
 var controller;
 var TimeWait = 0;
-var spawned = false;
+var spawned = true;
 const dist = 16;
 const animTime = .4;
 var travelled = 0;
@@ -28,51 +28,62 @@ func _ready():
 	animationPlayer.play("ballCharge")
 
 func _process(delta):
-	controller.DepthChanger(get_node("."))
-	if (travelled < dist):
-		var moveamount = min(16 * delta / animTime, dist - travelled)
-		travelled += moveamount
-		set_pos(get_pos() + dir.clamped(1) * moveamount)
-		#kinebody.move_to(get_global_pos())
-	else:
-		set_pos(get_pos().snapped(Vector2(4,4)))
+	if (spawned):
+		controller.DepthChanger(get_node("."))
+		if (travelled < dist):
+			var moveamount = min(16 * delta / animTime, dist - travelled)
+			travelled += moveamount
+			set_pos(get_pos() + dir.clamped(1) * moveamount)
+			#kinebody.move_to(get_global_pos())
+		else:
+			set_pos(get_pos().snapped(Vector2(4,4)))
 
 func PreCheck(playerPos): #playerPos is the future position of the player
-	targ = get_pos()/16
-	dir = IntToMove(moveArray[ind]);
-	var id = controller.CheckNode(targ + dir)
-	var test = false;
-	if (typeof(id) == 2):
-		test = true;
-	else:
-		test = id.onPreCollide(1, get_node("."));
-
-	if test:
-		targ += dir
-		controller.UpdateNode(0, get_pos()/16)
-		controller.UpdateNode(get_node("."), targ)
-	else:
-		dir = Vector2(0.0, 0.0)
-		#return true
-
-
-
-	ind += 1;
-	if (ind >= moveArray.size()):
-		ind = 0
+	if spawned:
+		targ = get_pos()/16
+		dir = IntToMove(moveArray[ind]);
+		var id = controller.CheckNode(targ + dir)
+		var test = false;
+		if (typeof(id) == 2):
+			test = true;
+		else:
+			test = id.onPreCollide(1, get_node("."));
+	
+		if test:
+			targ += dir
+			controller.UpdateNode(0, get_pos()/16)
+			controller.UpdateNode(get_node("."), targ)
+		else:
+			dir = Vector2(0.0, 0.0)
+			#return true
+	
+		ind += 1;
+		if (ind >= moveArray.size()):
+			ind = 0
 
 func TimeSpawn():
 	if (spawned):
 		travelled = 0
+	else:
+		get_node(".").hide()
 
 	if (TimeWait > 0):
 		TimeWait -= 1;
 		targ = get_pos()/16;
 	elif (not spawned and TimeWait == 0):
-		var underitem = controller.CheckNode(targ/16)
+		get_node(".").show()
+		var underitem = controller.CheckNode(targ)
+		var tmpbool = true;
+		
+		
 		if (typeof(underitem) == 2):
 			pass
 		elif (not underitem.is_in_group("Button")):
+			tmpbool = false;
+		
+		if tmpbool:
+			controller.UpdateNode(get_node("."), targ)
+		else:
 			controller.Explode(get_node("."), underitem)
 		spawned = true;
 		travelled = 0;

@@ -14,6 +14,7 @@ var rerunsignal = false;
 var timer = 0;
 var map = []
 const animtime = .6;
+const gunPower = 2;
 var size;
 var player;
 var actionvalid;
@@ -77,7 +78,7 @@ func _process(delta):
 			rerunsignal = false;
 		lastmoving = moving;
 		
-		if actionSignal:
+		if actionSignal or not player.spawned:
 			actionvalid = player.InitialCheck(movement, shootdir)
 			
 		if (actionvalid):
