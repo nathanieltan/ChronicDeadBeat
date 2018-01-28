@@ -3,12 +3,17 @@
 [ext_resource path="res://cornerul.gd" type="Script" id=1]
 [ext_resource path="res://images/reflect_block_2.png" type="Texture" id=2]
 
-[node name="CornerUL" type="Node2D"]
+[node name="CornerUL" type="Node2D" groups=[
+"Pushable",
+"Terrain",
+"Mirrors",
+]]
 
 script/script = ExtResource( 1 )
 
 [node name="CornerUL_sprite" type="Sprite" parent="."]
 
 texture = ExtResource( 2 )
+offset = Vector2( 0, -8 )
 
 

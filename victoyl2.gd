@@ -28,7 +28,7 @@ func is_satisfied():
 	var pos = cont.find_node("Pushable").get_global_pos()
 	var pos2 = cont.find_node("Button").get_global_pos()
 	var diff = pos - pos2
-	if diff.length() < 5:
+	if diff.length() < 5 and cont.find_node("Pushable").is_visible():
 		return true
 	else:	
 		return false

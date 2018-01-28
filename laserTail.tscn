@@ -6,7 +6,21 @@
 [node name="laserTail" type="Sprite"]
 
 texture = ExtResource( 1 )
-modulate = Color( 0.0829163, 0.923503, 0.964844, 1 )
+modulate = Color( 0.964844, 0.868383, 0.0829163, 1 )
 script/script = ExtResource( 2 )
+
+[node name="Horizontal" type="Sprite" parent="."]
+
+[node name="Vertical" type="Sprite" parent="."]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+
+playback/process_mode = 1
+playback/default_blend_time = 0.0
+root/root = NodePath("..")
+playback/active = true
+playback/speed = 1.0
+blend_times = [  ]
+autoplay = ""
 
 

@@ -14,6 +14,7 @@ var rerunsignal = false;
 var timer = 0;
 var map = []
 const animtime = .4;
+const gunPower = 3;
 var size;
 var player;
 var actionvalid;
@@ -51,8 +52,16 @@ func _process(delta):
 				shootdir.x = -1;
 				actionTaken = true;
 			elif (Input.is_action_pressed("shoot_right")):
+<<<<<<< HEAD
+=======
+				#get_tree().change_scene("res://Level2.tscn")
+>>>>>>> a75bdf765ab3239a9508ced7e376f73f424b90b3
 				shootdir.x = 1;
 				actionTaken = true;
+			elif (Input.is_action_pressed("retry")):
+				var currentScene = get_tree().get_current_scene()
+				if(not currentScene.get_filename() == "res://TitleScreen.tscn"):
+					get_tree().reload_current_scene()
 		else:
 			if not (Input.is_action_pressed("move_down") 
 			or Input.is_action_pressed("move_up")
@@ -77,7 +86,7 @@ func _process(delta):
 			rerunsignal = false;
 		lastmoving = moving;
 		
-		if actionSignal:
+		if actionSignal or not player.spawned:
 			actionvalid = player.InitialCheck(movement, shootdir)
 			
 		if (actionvalid):
@@ -120,20 +129,28 @@ func Explode(node1, node2):
 	print(node1.get_name())
 	print(node2.get_name())
 	if (node1.is_in_group("Terrain") and node2.is_in_group("Terrain")):
+		UpdateNode(0, node1.get_pos())
+		UpdateNode(0, node2.get_pos())
 		node1.queue_free()
 		node2.queue_free()
 	elif(node1.is_in_group("Terrain") or node2.is_in_group("Terrain")):
 		if (node1.is_in_group("Enemies") or node1 == player):
+			UpdateNode(0, node1.get_pos())
 			node1.queue_free()
 		elif (node2.is_in_group("Enemies") or node2 == player):
+			UpdateNode(0, node2.get_pos())
 			node2.queue_free()
 	elif(node1.is_in_group("Enemies") and node2.is_in_group("Enemies")):
+		UpdateNode(0, node1.get_pos())
+		UpdateNode(0, node2.get_pos())
 		node1.queue_free()
 		node2.queue_free()
 	elif(node1.is_in_group("Enemies") or node2.is_in_group("Enemies")):
 		if (node1 == player):
+			UpdateNode(0, node1.get_pos())
 			node1.queue_free()
 		elif (node2 == player):
+			UpdateNode(0, node2.get_pos())
 			node2.queue_free()
 
 func _ready():
