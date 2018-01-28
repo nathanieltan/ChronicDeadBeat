@@ -13,7 +13,7 @@
 [ext_resource path="res://laserHead.tscn" type="PackedScene" id=11]
 [ext_resource path="res://BasicEnemy.tscn" type="PackedScene" id=12]
 
-[sub_resource type="ConvexPolygonShape2D" id=1]
+[sub_resource type="ConvexPolygonShape2D" id=9]
 
 custom_solver_bias = 0.0
 points = Vector2Array( -4, 4, -4, -4, 4, -4, 4, 4 )
@@ -181,8 +181,9 @@ transform/pos = Vector2( 328, 192 )
 "Player",
 ]]
 
-transform/pos = Vector2( 296, 224 )
+transform/pos = Vector2( 296, 232 )
 texture = ExtResource( 6 )
+offset = Vector2( 0, -8 )
 vframes = 10
 hframes = 8
 frame = 79
@@ -191,7 +192,7 @@ script/script = ExtResource( 7 )
 [node name="PlayerBody" type="KinematicBody2D" parent="Player"]
 
 input/pickable = false
-shapes/0/shape = SubResource( 1 )
+shapes/0/shape = SubResource( 9 )
 shapes/0/transform = Matrix32( 1, 0, 0, 1, 0, 8 )
 shapes/0/trigger = false
 collision/layers = 1
@@ -246,7 +247,7 @@ transform/pos = Vector2( 312, 160 )
 
 [node name="BasicEnemy1" parent="." instance=ExtResource( 12 )]
 
-transform/pos = Vector2( 264, 168 )
+transform/pos = Vector2( 264, 160 )
 
 [node name="Camera2D" type="Camera2D" parent="."]
 

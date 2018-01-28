@@ -23,6 +23,9 @@ func _ready():
 	kinebody = get_node("BasicEnemyBody")
 	controller = get_parent()
 	set_process(true)
+	
+	var animationPlayer = get_node("AnimationPlayer")
+	animationPlayer.play("ballCharge")
 
 func _process(delta):
 	controller.DepthChanger(get_node("."))
