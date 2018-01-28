@@ -1,19 +1,20 @@
-[gd_scene load_steps=23 format=1]
+[gd_scene load_steps=24 format=1]
 
 [ext_resource path="res://rootScript.gd" type="Script" id=1]
 [ext_resource path="res://uncollidingTiles.res" type="TileSet" id=2]
 [ext_resource path="res://collidingTiles.res" type="TileSet" id=3]
 [ext_resource path="res://tilemapScript.gd" type="Script" id=4]
-[ext_resource path="res://laserHead.tscn" type="PackedScene" id=5]
-[ext_resource path="res://images/player_master_v2.png" type="Texture" id=6]
-[ext_resource path="res://PlayerScript.gd" type="Script" id=7]
-[ext_resource path="res://camera.gd" type="Script" id=8]
-[ext_resource path="res://playerBodyScript.gd" type="Script" id=9]
-[ext_resource path="res://icon.png" type="Texture" id=10]
-[ext_resource path="res://Pushable.tscn" type="PackedScene" id=11]
-[ext_resource path="res://victoyl3.gd" type="Script" id=12]
-[ext_resource path="res://Teleport.tscn" type="PackedScene" id=13]
-[ext_resource path="res://images/switchcombo1.png" type="Texture" id=14]
+[ext_resource path="res://Button.tscn" type="PackedScene" id=5]
+[ext_resource path="res://laserHead.tscn" type="PackedScene" id=6]
+[ext_resource path="res://images/player_master_v2.png" type="Texture" id=7]
+[ext_resource path="res://PlayerScript.gd" type="Script" id=8]
+[ext_resource path="res://camera.gd" type="Script" id=9]
+[ext_resource path="res://playerBodyScript.gd" type="Script" id=10]
+[ext_resource path="res://icon.png" type="Texture" id=11]
+[ext_resource path="res://Pushable.tscn" type="PackedScene" id=12]
+[ext_resource path="res://victoyl2.gd" type="Script" id=13]
+[ext_resource path="res://Teleport.tscn" type="PackedScene" id=14]
+[ext_resource path="res://images/switchcombo1.png" type="Texture" id=15]
 
 [sub_resource type="ConvexPolygonShape2D" id=1]
 
@@ -154,7 +155,7 @@ collision/bounce = 0.0
 collision/layers = 1
 collision/mask = 1
 occluder/light_mask = 1
-tile_data = IntArray( 458769, 0, 458770, 0, 458771, 0, 524304, 0, 524305, 0, 524306, 0, 524307, 0, 524308, 0, 589839, 1, 589840, 0, 589841, 0, 589842, 0, 589843, 0, 589844, 0, 589845, 0, 655375, 1, 655376, 0, 655377, 0, 655378, 0, 655379, 0, 655380, 0, 655381, 0, 720914, 0, 786450, 0, 851986, 0, 917520, 0, 917521, 0, 917522, 0, 917523, 0, 917524, 1, 983056, 0, 983057, 0, 983058, 0, 983059, 0, 983060, 4, 1048592, 0, 1048593, 0, 1048594, 0, 1048595, 0, 1048596, 0, 1114128, 5, 1114129, 3, 1114130, 0, 1114131, 0, 1114132, 0, 1179665, 1, 1179666, 0, 1179667, 0 )
+tile_data = IntArray( 458769, 0, 458770, 0, 458771, 0, 524304, 0, 524305, 1, 524306, 0, 524307, 0, 524308, 0, 589839, 0, 589840, 0, 589841, 1, 589842, 0, 589843, 0, 589844, 0, 589845, 0, 655375, 0, 655376, 0, 655377, 4, 655378, 0, 655379, 0, 655380, 0, 655381, 0, 720911, 0, 720912, 0, 720913, 0, 720914, 0, 720915, 0, 720916, 0, 720917, 0, 786447, 0, 786448, 0, 786449, 0, 786450, 0, 786451, 0, 786452, 0, 786453, 0, 851986, 0, 917522, 0, 983056, 0, 983057, 0, 983058, 0, 983059, 0, 983060, 0, 1048592, 0, 1048593, 0, 1048594, 0, 1048595, 0, 1048596, 0, 1114128, 0, 1114129, 0, 1114130, 0, 1114131, 0, 1114132, 0, 1179665, 0, 1179666, 0, 1179667, 0 )
 
 [node name="CollidingTileMap" type="TileMap" parent="."]
 
@@ -172,10 +173,14 @@ collision/bounce = 0.0
 collision/layers = 1
 collision/mask = 1
 occluder/light_mask = 1
-tile_data = IntArray( 327696, 0, 327697, 2, 327698, 2, 327699, 2, 327700, 1, 393231, 0, 393232, 11, 393233, 12, 393234, 12, 393235, 12, 393236, 10, 393237, 1, 458766, 0, 458767, 11, 458768, 12, 458772, 12, 458773, 10, 458774, 1, 524302, 3, 524303, 14, 524309, 12, 524310, 4, 589838, 3, 589846, 4, 655374, 3, 655382, 4, 720910, 7, 720911, 5, 720912, 5, 720913, 8, 720915, 9, 720916, 5, 720917, 5, 720918, 6, 786447, 0, 786448, 2, 786449, 11, 786451, 10, 786452, 2, 786453, 1, 851983, 3, 851984, 12, 851985, 12, 851987, 12, 851988, 12, 851989, 4, 917519, 3, 917525, 4, 983055, 3, 983061, 4, 1048591, 3, 1048597, 4, 1114127, 3, 1114133, 4, 1179663, 7, 1179664, 8, 1179668, 9, 1179669, 6, 1245200, 7, 1245201, 5, 1245202, 5, 1245203, 5, 1245204, 6 )
+tile_data = IntArray( 327697, 0, 327698, 2, 327699, 1, 393232, 0, 393233, 11, 393234, 12, 393235, 10, 393236, 1, 458767, 0, 458768, 11, 458769, 14, 458771, 12, 458772, 10, 458773, 1, 524302, 0, 524303, 11, 524304, 12, 524308, 12, 524309, 10, 524310, 1, 589838, 3, 589839, 12, 589845, 12, 589846, 4, 655374, 3, 655382, 4, 720910, 3, 720918, 4, 786446, 3, 786454, 4, 851982, 7, 851983, 5, 851984, 5, 851985, 8, 851987, 9, 851988, 5, 851989, 5, 851990, 6, 917519, 0, 917520, 2, 917521, 11, 917523, 10, 917524, 2, 917525, 1, 983055, 3, 983056, 12, 983057, 12, 983059, 12, 983060, 12, 983061, 4, 1048591, 3, 1048597, 4, 1114127, 3, 1114133, 4, 1179663, 7, 1179664, 8, 1179668, 9, 1179669, 6, 1245200, 7, 1245201, 5, 1245202, 5, 1245203, 5, 1245204, 6 )
 script/script = ExtResource( 4 )
 
-[node name="laserHead" parent="." instance=ExtResource( 5 )]
+[node name="Button" parent="." instance=ExtResource( 5 )]
+
+transform/pos = Vector2( 296, 172 )
+
+[node name="laserHead" parent="." instance=ExtResource( 6 )]
 
 editor/display_folded = true
 visibility/visible = false
@@ -186,12 +191,12 @@ transform/pos = Vector2( 264, 248 )
 ]]
 
 transform/pos = Vector2( 296, 280 )
-texture = ExtResource( 6 )
+texture = ExtResource( 7 )
 offset = Vector2( 0, -8 )
 vframes = 10
 hframes = 8
 frame = 79
-script/script = ExtResource( 7 )
+script/script = ExtResource( 8 )
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
 
@@ -212,7 +217,7 @@ drag_margin/left = 0.0
 drag_margin/top = 0.0
 drag_margin/right = 0.0
 drag_margin/bottom = 0.0
-script/script = ExtResource( 8 )
+script/script = ExtResource( 9 )
 
 [node name="PlayerBody" type="KinematicBody2D" parent="Player"]
 
@@ -223,7 +228,7 @@ shapes/0/trigger = false
 collision/layers = 1
 collision/mask = 1
 collision/margin = 0.08
-script/script = ExtResource( 9 )
+script/script = ExtResource( 10 )
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Player/PlayerBody"]
 
@@ -237,7 +242,7 @@ trigger = false
 
 visibility/visible = false
 transform/scale = Vector2( 0.1, 0.1 )
-texture = ExtResource( 10 )
+texture = ExtResource( 11 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Player"]
 
@@ -258,34 +263,24 @@ autoplay = "idleRight"
 
 [node name="Important Things" type="Node2D" parent="."]
 
-[node name="Pushable" parent="." instance=ExtResource( 11 )]
+[node name="Pushable" parent="." instance=ExtResource( 12 )]
 
 transform/pos = Vector2( 296, 220 )
 offset = Vector2( 0, -12 )
 
-[node name="Pushable1" parent="." instance=ExtResource( 11 )]
+[node name="VictoryL2" type="Node2D" parent="."]
 
-transform/pos = Vector2( 296, 204 )
-offset = Vector2( 0, -12 )
+script/script = ExtResource( 13 )
 
-[node name="Pushable2" parent="." instance=ExtResource( 11 )]
-
-transform/pos = Vector2( 296, 188 )
-offset = Vector2( 0, -12 )
-
-[node name="VictoryL3" type="Node2D" parent="."]
-
-script/script = ExtResource( 12 )
-
-[node name="Teleport" parent="VictoryL3" instance=ExtResource( 13 )]
+[node name="Teleport" parent="VictoryL2" instance=ExtResource( 14 )]
 
 transform/pos = Vector2( 296, 112 )
 
-[node name="Tiles" type="Sprite" parent="VictoryL3"]
+[node name="Tiles" type="Sprite" parent="VictoryL2"]
 
 visibility/visible = false
 transform/pos = Vector2( 280, 144 )
-texture = ExtResource( 14 )
+texture = ExtResource( 15 )
 
 [node name="TileMap" type="TileMap" parent="."]
 

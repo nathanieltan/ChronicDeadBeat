@@ -256,8 +256,6 @@ playback/speed = 1.0
 blend_times = [  ]
 autoplay = "idleRight"
 
-[node name="Important Things" type="Node2D" parent="."]
-
 [node name="Pushable" parent="." instance=ExtResource( 11 )]
 
 transform/pos = Vector2( 296, 220 )
