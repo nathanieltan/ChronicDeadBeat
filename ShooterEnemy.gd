@@ -106,7 +106,8 @@ func TimeSpawn():
 		if (typeof(underitem) == 2):
 			pass
 		elif (not underitem.is_in_group("Button")):
-			tmpbool = false;
+			if underitem != get_node("."):
+				tmpbool = false;
 		
 		controller.UpdateNode(get_node("."), targ)
 		if not tmpbool:

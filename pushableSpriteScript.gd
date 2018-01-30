@@ -55,7 +55,7 @@ func TimeSpawn():
 	if (TimeWait > 0):
 		TimeWait -= 1;
 		targ = get_pos()/16;
-	elif (not spawned and TimeWait == 0):
+	elif (TimeWait == 0):
 		get_node(".").show()
 		var underitem = controller.CheckNode(targ)
 		var tmpbool = true;
@@ -64,7 +64,8 @@ func TimeSpawn():
 		if (typeof(underitem) == 2):
 			pass
 		elif (not underitem.is_in_group("Button")):
-			tmpbool = false;
+			if underitem != get_node("."):
+				tmpbool = false;
 		controller.UpdateNode(get_node("."), targ)
 		if not tmpbool:
 			controller.Explode(get_node("."), underitem)

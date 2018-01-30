@@ -93,9 +93,10 @@ func PreCheck():
 	else:
 		test = id.onPreCollide(0, dir)
 		pass
-	controller.UpdateNode(0, get_pos()/16)
-	controller.UpdateNode(get_node("."), targ)
+	
 	if test:
+		controller.UpdateNode(0, get_pos()/16)
+		controller.UpdateNode(get_node("."), targ)
 		var animationPlayer = get_node("AnimationPlayer")
 		if dir.x < 0:
 			animationPlayer.play("walkLeft")
@@ -126,14 +127,15 @@ func TimeSpawn():
 	if (TimeWait > 0):
 		TimeWait -= 1;
 		targ = get_pos()/16;
-	elif (not spawned and TimeWait == 0):
+	elif (TimeWait == 0):
 		get_node(".").show()
 		var underitem = controller.CheckNode(targ)
 		var tmpbool = true;
 		if (typeof(underitem) == 2):
 			pass
 		elif (not underitem.is_in_group("Button")):
-			tmpbool = false;
+			if underitem != get_node("."):
+				tmpbool = false;
 			
 		controller.UpdateNode(get_node("."), targ)
 		if not tmpbool:

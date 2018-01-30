@@ -28,76 +28,83 @@ var allObjects;
 var collidingTileMap;
 var uncollidingTileMap;
 var lastScenePath;
+var deathcount = false;
+var deathcounter = 0;
+const deathlife = .35;
 
 func _process(delta):
+	if deathcount:
+		deathcounter += delta;
+		if deathcounter > deathlife:
+			playerDeath()
+	else:
+		dir = Vector2(0.0, 0.0)
+		shootdir = Vector2(0.0, 0.0)
+		actionprev = actionTaken
+		var code = 0;
+		if (replay):
+			if movenum < movelist.size():
+				set_Input(movelist[movenum], moving)
+				#print(movelist[movenum])
+			else:
+				#print("out of moves")
+				pass
+		else:
+			code = get_Input()
 	
-	dir = Vector2(0.0, 0.0)
-	shootdir = Vector2(0.0, 0.0)
-	actionprev = actionTaken
-	var code = 0;
-	if (replay):
-		if movenum < movelist.size():
-			set_Input(movelist[movenum], moving)
-			#print(movelist[movenum])
+		if not moving:
+			
+			# DO PRE COLLISION CHECKING PROCEDURE FOR WHETHER TURN SHOULD BE TAKEN
+			var movement = dir
+			
+				
+			if (not moving and lastmoving):
+				rerunsignal = true
+			else:
+				rerunsignal = false;
+			if ((actionTaken and not actionprev) or  replay) and not rerunsignal:
+				actionSignal = true;
+			else:
+				actionSignal = false;
+			lastmoving = moving;
+	
+			if actionSignal or not player.spawned:
+				actionvalid = player.InitialCheck(movement, shootdir)
+				
+			if (actionvalid):
+				
+				if not replay:
+					movelist.append(code);
+				# DO PRECHECKING PROCEDURE FOR ALL MOVING OBJECT
+				scenetree.call_group(0, "Terrain", "PreCheck")
+				player.PreCheck();
+				scenetree.call_group(0, "Enemies", "PreCheck", CheckPosOf(player), player.get_pos())
+				
+				
+				# DO SPAWNING PROCEDURE
+				scenetree.call_group(0, "Terrain", "TimeSpawn")
+				scenetree.call_group(0, "Enemies", "TimeSpawn")
+				player.TimeSpawn()
+				movenum += 1;
+				
+				#print(movelist)
+				#Pause!
+				moving = true;
+				timer = 0;
+			elif (rerunsignal):
+				
+				# DO CHECKING PROCEDURE (Check for animation, movement, and gamestates)
+				#print("rerunsignal")
+				scenetree.call_group(0, "Terrain", "PostCheck");
+				scenetree.call_group(0, "Enemies", "PostCheck");
+				player.PostCheck()
 		else:
-			#print("out of moves")
-			pass
-	else:
-		code = get_Input()
-
-	if not moving:
-		
-		# DO PRE COLLISION CHECKING PROCEDURE FOR WHETHER TURN SHOULD BE TAKEN
-		var movement = dir
-		
-			
-		if (not moving and lastmoving):
-			rerunsignal = true
-		else:
-			rerunsignal = false;
-		if ((actionTaken and not actionprev) or  replay) and not rerunsignal:
-			actionSignal = true;
-		else:
-			actionSignal = false;
-		lastmoving = moving;
-
-		if actionSignal or not player.spawned:
-			actionvalid = player.InitialCheck(movement, shootdir)
-			
-		if (actionvalid):
-			
-			if not replay:
-				movelist.append(code);
-			# DO PRECHECKING PROCEDURE FOR ALL MOVING OBJECT
-			scenetree.call_group(0, "Terrain", "PreCheck")
-			player.PreCheck();
-			scenetree.call_group(0, "Enemies", "PreCheck", CheckPosOf(player), player.get_pos())
-			
-			
-			# DO SPAWNING PROCEDURE
-			scenetree.call_group(0, "Terrain", "TimeSpawn")
-			scenetree.call_group(0, "Enemies", "TimeSpawn")
-			player.TimeSpawn()
-			movenum += 1;
-			
-			#print(movelist)
-			#Pause!
-			moving = true;
-			timer = 0;
-		elif (rerunsignal):
-			
-			# DO CHECKING PROCEDURE (Check for animation, movement, and gamestates)
-			#print("rerunsignal")
-			scenetree.call_group(0, "Terrain", "PostCheck");
-			scenetree.call_group(0, "Enemies", "PostCheck");
-			player.PostCheck()
-	else:
-		lastmoving = moving
-		if timer > animTime:
-			moving = false;
-		else:
-			timer += delta
-	actionvalid = false;
+			lastmoving = moving
+			if timer > animTime:
+				moving = false;
+			else:
+				timer += delta
+		actionvalid = false;
 		
 	#kinebody.set_pos(Vector2(0.0, 0.0))
 
@@ -113,12 +120,12 @@ func Explode(node1, node2):
 	elif(node1.is_in_group("Terrain") or node2.is_in_group("Terrain")):
 		if (node1.is_in_group("Enemies") or node1 == player):
 			if(node1 == player):
-				playerDeath()
+				DeathCounter()
 			else:
 				node1.queue_free()
 		elif (node2.is_in_group("Enemies") or node2 == player):
 			if (node2 == player):
-				playerDeath()
+				DeathCounter()
 			else:
 				node2.queue_free()
 	elif(node1.is_in_group("Enemies") and node2.is_in_group("Enemies")):
@@ -127,9 +134,13 @@ func Explode(node1, node2):
 		node2.queue_free()
 	elif(node1.is_in_group("Enemies") or node2.is_in_group("Enemies")):
 		if (node1 == player):
-			playerDeath()
+			DeathCounter()
 		elif (node2 == player):
-			playerDeath()
+			DeathCounter()
+
+func DeathCounter():
+	deathcount = true;
+	deathcounter = 0;
 
 func playerDeath():
 	lastScenePath = get_tree().get_current_scene().get_filename()
