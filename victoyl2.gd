@@ -21,7 +21,6 @@ func _process(delta):
 	else:
 		tp.setState(false)
 		tiles.hide()
-	print(tp.get_global_pos())
 
 func is_satisfied():
 	var cont = get_parent()

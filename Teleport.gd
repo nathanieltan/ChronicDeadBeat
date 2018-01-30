@@ -5,7 +5,10 @@ var active = false
 # var a = 2
 # var b = "textvar"
 
+var controller;
+
 func _ready():
+	controller = get_parent().get_parent();
 	var Teleport = get_node("AnimationPlayer")
 	if not Teleport.is_playing():
 		Teleport.play("Inactive")
@@ -13,7 +16,9 @@ func _ready():
 
 func _process(delta):
 	if able_to_progress():
-		get_tree().change_scene(get_parent().next_level)
+		var level = get_tree().get_root().get_child(0).finishLevel(get_parent().next_level, get_tree().get_current_scene().get_filename())
+		get_tree().get_root().get_child(0).set_movelist(controller.movelist);
+		get_tree().change_scene(level)
 	var Teleport = get_node("AnimationPlayer")
 	if not Teleport.is_playing():
 		if not active:
@@ -31,7 +36,7 @@ func getState():
 	return active
 	
 func checkPlayerPos():
-	var player_pos = get_owner().get_node("Player").get_pos()
+	var player_pos = controller.get_node("Player").get_pos()
 	#var player_pos = Vector2(0, 0)
 	#if granny.get_name() == "Game":
 	#	player_pos = granny.find_node("Player").get_global_pos()

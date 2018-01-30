@@ -20,7 +20,7 @@ points = Vector2Array( -4, 4, -4, -4, 4, -4, 4, 4 )
 
 resource/name = "SpikesUDLR"
 length = 0.5
-loop = true
+loop = false
 step = 0.06
 tracks/0/type = "value"
 tracks/0/path = NodePath("upSpike:frame")

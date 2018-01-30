@@ -21,6 +21,7 @@ script/script = ExtResource( 2 )
 
 [node name="PushableBody" type="KinematicBody2D" parent="."]
 
+visibility/visible = false
 input/pickable = false
 shapes/0/shape = SubResource( 1 )
 shapes/0/transform = Matrix32( 1, 0, 0, 1, 0, 0 )
@@ -31,6 +32,7 @@ collision/margin = 0.08
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="PushableBody"]
 
+visibility/visible = false
 build_mode = 0
 polygon = Vector2Array( -4, 4, -4, -4, 4, -4, 4, 4 )
 shape_range = Vector2( 0, 0 )

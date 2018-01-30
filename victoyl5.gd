@@ -4,7 +4,7 @@ extends Node2D
 # var a = 2
 # var b = "textvar"
 
-var next_level = "res://Levels/Level5.tscn"
+var next_level = "res://Levels/Level6.tscn"
 
 func _ready():
 	var tp = find_node("Teleport")

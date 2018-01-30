@@ -4,12 +4,12 @@
 [ext_resource path="res://uncollidingTiles.res" type="TileSet" id=2]
 [ext_resource path="res://collidingTiles.res" type="TileSet" id=3]
 [ext_resource path="res://tilemapScript.gd" type="Script" id=4]
-[ext_resource path="res://laserHead.tscn" type="PackedScene" id=5]
-[ext_resource path="res://images/player_master_v2.png" type="Texture" id=6]
-[ext_resource path="res://PlayerScript.gd" type="Script" id=7]
-[ext_resource path="res://camera.gd" type="Script" id=8]
-[ext_resource path="res://playerBodyScript.gd" type="Script" id=9]
-[ext_resource path="res://icon.png" type="Texture" id=10]
+[ext_resource path="res://images/player_master_v2.png" type="Texture" id=5]
+[ext_resource path="res://PlayerScript.gd" type="Script" id=6]
+[ext_resource path="res://camera.gd" type="Script" id=7]
+[ext_resource path="res://playerBodyScript.gd" type="Script" id=8]
+[ext_resource path="res://icon.png" type="Texture" id=9]
+[ext_resource path="res://ShooterEnemy.tscn" type="PackedScene" id=10]
 [ext_resource path="res://victoryl1.gd" type="Script" id=11]
 [ext_resource path="res://Teleport.tscn" type="PackedScene" id=12]
 
@@ -173,24 +173,18 @@ occluder/light_mask = 1
 tile_data = IntArray( 327697, 0, 327698, 2, 327699, 1, 393231, 0, 393232, 2, 393233, 11, 393234, 12, 393235, 10, 393236, 2, 393237, 1, 458767, 3, 458768, 12, 458769, 12, 458771, 12, 458772, 12, 458773, 4, 524303, 3, 524309, 4, 589839, 3, 589845, 4, 655375, 3, 655381, 4, 720911, 3, 720917, 4, 786447, 3, 786453, 4, 851983, 7, 851984, 5, 851985, 5, 851986, 5, 851987, 5, 851988, 5, 851989, 6 )
 script/script = ExtResource( 4 )
 
-[node name="laserHead" parent="." instance=ExtResource( 5 )]
-
-editor/display_folded = true
-visibility/visible = false
-transform/pos = Vector2( 264, 248 )
-
 [node name="Player" type="Sprite" parent="." groups=[
 "Player",
 ]]
 
 editor/display_folded = true
 transform/pos = Vector2( 296, 184 )
-texture = ExtResource( 6 )
+texture = ExtResource( 5 )
 offset = Vector2( 0, -8 )
 vframes = 10
 hframes = 8
 frame = 79
-script/script = ExtResource( 7 )
+script/script = ExtResource( 6 )
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
 
@@ -211,7 +205,7 @@ drag_margin/left = 0.0
 drag_margin/top = 0.0
 drag_margin/right = 0.0
 drag_margin/bottom = 0.0
-script/script = ExtResource( 8 )
+script/script = ExtResource( 7 )
 
 [node name="PlayerBody" type="KinematicBody2D" parent="Player"]
 
@@ -222,7 +216,7 @@ shapes/0/trigger = false
 collision/layers = 1
 collision/mask = 1
 collision/margin = 0.08
-script/script = ExtResource( 9 )
+script/script = ExtResource( 8 )
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Player/PlayerBody"]
 
@@ -236,7 +230,7 @@ trigger = false
 
 visibility/visible = false
 transform/scale = Vector2( 0.1, 0.1 )
-texture = ExtResource( 10 )
+texture = ExtResource( 9 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Player"]
 
@@ -257,6 +251,10 @@ autoplay = "idleRight"
 
 [node name="Important Things" type="Node2D" parent="."]
 
+[node name="ShooterEnemy" parent="." instance=ExtResource( 10 )]
+
+transform/pos = Vector2( 328, 200 )
+
 [node name="VictoryL1" type="Node2D" parent="."]
 
 script/script = ExtResource( 11 )
@@ -266,4 +264,3 @@ script/script = ExtResource( 11 )
 transform/pos = Vector2( 296, 112 )
 
 
-[editable path="laserHead"]

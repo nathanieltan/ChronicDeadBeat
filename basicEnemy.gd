@@ -11,7 +11,7 @@ var controller;
 var TimeWait = 0;
 var spawned = true;
 const dist = 16;
-const animTime = .4;
+var animTime;
 var travelled = 0;
 var dir = Vector2(0.0, 0.0);
 var targ;
@@ -19,6 +19,7 @@ var targ;
 func _ready():
 	# Called every time the node is added to the scene.
 	# Initialization here
+	animTime = get_tree().get_root().get_child(0).animTime;
 	targ = get_pos()/16;
 	kinebody = get_node("BasicEnemyBody")
 	controller = get_parent()
@@ -38,7 +39,7 @@ func _process(delta):
 		else:
 			set_pos(get_pos().snapped(Vector2(4,4)))
 
-func PreCheck(playerPos): #playerPos is the future position of the player
+func PreCheck(playerPos, playerprevpos): #playerPos is the future position of the player
 	if spawned:
 		targ = get_pos()/16
 		#dir = IntToMove(moveArray[ind]);
@@ -68,6 +69,7 @@ func PreCheck(playerPos): #playerPos is the future position of the player
 				targ += dir
 				controller.UpdateNode(0, get_pos()/16)
 				controller.UpdateNode(get_node("."), targ)
+				print("happened")
 			else:
 				dir = Vector2(0.0, 0.0)
 				#return true
@@ -98,10 +100,10 @@ func TimeSpawn():
 		elif (not underitem.is_in_group("Button")):
 			tmpbool = false;
 		
-		if tmpbool:
-			controller.UpdateNode(get_node("."), targ)
-		else:
+		controller.UpdateNode(get_node("."), targ)
+		if not tmpbool:
 			controller.Explode(get_node("."), underitem)
+		
 		spawned = true;
 		travelled = 0;
 	#kinebody.set_pos(Vector2(0.0, 0.0))
@@ -122,7 +124,6 @@ func onInitialCollide(dir):
 
 func onPreCollide(id, player):
 	if (id == 0):
-		print ("ho dang")
 		return true
 	elif (id == 1):
 		return false

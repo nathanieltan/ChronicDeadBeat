@@ -6,7 +6,7 @@ extends Sprite
 var TimeWait = 0;
 var spawned = true;
 const dist = 16;
-const animTime = .4;
+var animTime;
 var travelled = 16;
 #var move = Vector2(0.0, 0.0);
 var kinebody;
@@ -21,6 +21,7 @@ var playerFacing = "right";
 func _ready():
 	# Called every time the node is added to the scene.
 	# Initialization here
+	animTime = get_tree().get_root().get_child(0).animTime;
 	targ = get_global_pos()
 	controller = get_parent();
 	kinebody = get_node("PlayerBody")
@@ -30,7 +31,6 @@ func _ready():
 	animationPlayer.play("teleportIn")
 
 func _process(delta):
-	print(get_global_pos())
 	# Checks if the idle animation should play
 	if (spawned):
 		if travelled >= dist:
@@ -42,7 +42,6 @@ func _process(delta):
 					animationPlayer.play("idleLeft")
 		controller.DepthChanger(get_node("."))
 		if (travelled < dist):
-			#print(travelled)
 			var moveamount = min(16 * delta / animTime, dist - travelled)
 			travelled += moveamount
 			set_pos(get_pos() + dir.clamped(1) * moveamount)
@@ -135,22 +134,21 @@ func TimeSpawn():
 			pass
 		elif (not underitem.is_in_group("Button")):
 			tmpbool = false;
-		if tmpbool:
-			controller.UpdateNode(get_node("."), targ)
-		else:
+			
+		controller.UpdateNode(get_node("."), targ)
+		if not tmpbool:
 			controller.Explode(get_node("."), underitem)
+			
 		spawned = true;
 		travelled = 0;
 
 	#kinebody.set_pos(Vector2(0.0,0.0))
 
 func onInitialCollide(id):
-		#print("stayed in place")
 		return true
 
 func onPreCollide(id, dir):
 	if (id == 0):
-		#print("stayed in place")
 		return true
 	elif(id == 1):
 		controller.Explode(get_node("."), dir)
@@ -195,10 +193,7 @@ func CheckShoot(shootdir):
 			orientation.append(shootdir)
 			continue
 		else:
-			print("wowee")
-			print(id)
 			if (id.is_in_group("Terrain") || id.is_in_group("Enemies") || id == get_node(".")):
-				print("wowoiwoiw")
 				id.TimeWait = controller.gunPower;
 				controller.UpdateNode(0, id.get_pos()/16);
 				id.spawned = false;
@@ -214,7 +209,6 @@ func CheckShoot(shootdir):
 		laser.d_mode(dir_dic[dir])
 		get_parent().add_child(laser)
 		laser.set_global_pos(laserspots[ind])
-		#print(laserspots[ind])
 
 func Vector2Dir(vec):
 	var tmp = vec.normalized()

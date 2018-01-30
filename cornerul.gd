@@ -6,7 +6,7 @@ extends Node2D
 var TimeWait = 0;
 var spawned = true;
 const dist = 16;
-const animTime = .4;
+var animTime;
 var travelled = 16;
 var dir = Vector2(0.0, 0.0);
 var controller;
@@ -14,6 +14,7 @@ var targ = get_pos();
 func _ready():
 	# Called every time the node is added to the scene.
 	# Initialization here
+	animTime = get_tree().get_root().get_child(0).animTime;
 	controller = get_parent()
 	set_process(true)
 	pass
@@ -42,7 +43,6 @@ func PreCheck():
 		controller.UpdateNode(get_node("."), targ + dir)
 
 func TimeSpawn():
-	#print(spawned)
 	if (spawned):
 		travelled = 0
 	else:
@@ -76,7 +76,6 @@ func PostCheck():
 	
 
 func onInitialCollide(direnter):
-	print("initial")
 	#controller.CheckNode(get_pos()+dir)
 	#dir = direnter
 	if not spawned:
@@ -93,12 +92,10 @@ func onInitialCollide(direnter):
 		
 func onPreCollide(id, direnter):
 	#controller.CheckNode(get_pos()+dir)
-	print("pree")
 	if not spawned:
 		return true;
 	if (id == 0):
 		dir = direnter
-	#	print(dir)
 		targ = get_pos()/16
 		var collide = controller.CheckNode(targ + dir)
 		var test = false;

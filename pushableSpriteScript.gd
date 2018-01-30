@@ -8,7 +8,7 @@ var kinebody
 var TimeWait = 0;
 var spawned = true;
 const dist = 16;
-const animTime = .4;
+var animTime;
 var travelled = 16;
 var dir = Vector2(0.0, 0.0);
 var controller;
@@ -17,6 +17,7 @@ var targ = get_pos();
 func _ready():
 	# Called every time the node is added to the scene.
 	# Initialization here
+	animTime = get_tree().get_root().get_child(0).animTime;
 	kinebody = get_node("PushableBody")
 	controller = get_parent()
 	set_process(true)
@@ -40,12 +41,12 @@ func _process(delta):
 func PreCheck():
 	#dir = Vector2(0.0, 0.0);
 	if (spawned):
+		#print("precheck")
 		targ = get_pos()/16;
 		controller.UpdateNode(0, get_pos()/16)
 		controller.UpdateNode(get_node("."), targ + dir)
 
 func TimeSpawn():
-	print(spawned)
 	if (spawned):
 		travelled = 0
 	else:
@@ -64,13 +65,10 @@ func TimeSpawn():
 			pass
 		elif (not underitem.is_in_group("Button")):
 			tmpbool = false;
-		
-		if tmpbool:
-			controller.UpdateNode(get_node("."), targ)
-		else:
+		controller.UpdateNode(get_node("."), targ)
+		if not tmpbool:
 			controller.Explode(get_node("."), underitem)
 		spawned = true;
-		travelled = 0;
 	#kinebody.set_pos(Vector2(0.0,0.0))
 
 func PostCheck():
@@ -95,11 +93,12 @@ func onInitialCollide(direnter):
 		
 func onPreCollide(id, direnter):
 	#controller.CheckNode(get_pos()+dir)
+	
 	if not spawned:
 		return true;
 	if (id == 0):
+		#print("precollide")
 		dir = direnter
-	#	print(dir)
 		targ = get_pos()/16
 		var collide = controller.CheckNode(targ + dir)
 		var test = false;

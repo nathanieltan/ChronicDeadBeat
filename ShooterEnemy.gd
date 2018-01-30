@@ -10,16 +10,18 @@ var controller;
 var TimeWait = 0;
 var spawned = true;
 const dist = 16;
-const animTime = .4;
+var animTime;
 var travelled = 0;
 var dir = Vector2(0.0, 0.0);
 var shootdir = Vector2(0.0, 0.0);
 var targ;
+var startshoot = false;
 var deadlyLazer = preload("res://laserTail.tscn")
 
 func _ready():
 	# Called every time the node is added to the scene.
 	# Initialization here
+	animTime = get_tree().get_root().get_child(0).animTime;
 	targ = get_pos()/16;
 	controller = get_parent()
 	set_process(true)
@@ -38,19 +40,28 @@ func _process(delta):
 		else:
 			set_pos(get_pos().snapped(Vector2(4,4)))
 
-func PreCheck(playerPos): #playerPos is the future position of the player
+func PreCheck(playerPos, playerPrevPos): #playerPos is the future position of the player
 	if spawned:
 		targ = get_pos()/16
 		var ydiff = playerPos.y - get_pos().y
-		print("ydiff: ", ydiff)
-		if (abs(ydiff) < 1):
+		#print(ydiff)
+		if not startshoot:
+			if (abs(ydiff) < 1):
+				dir = Vector2(0.0, 0.0);
+				shootdir = Vector2(0.0, 0.0)
+				startshoot = true;
+				print("preps")
+			else:
+				dir = Vector2(0.0, sign(ydiff));#IntToMove(moveArray[ind]);
+				shootdir = Vector2(0.0, 0.0);
+				print("moves")
+		else:
+			print("shoots")
 			dir = Vector2(0.0, 0.0);
 			var xdiff = playerPos.x - get_pos().x;
 			shootdir = Vector2(sign(xdiff), 0.0);
-		else:
-			dir = Vector2(0.0, sign(ydiff));#IntToMove(moveArray[ind]);
-			shootdir = Vector2(0.0, 0.0);
-		#print ("wow: ", shootdir)
+			startshoot = false;
+		
 		var id = controller.CheckNode(targ + dir);
 		var test = false;
 		if (typeof(id) == 2):
@@ -90,10 +101,10 @@ func TimeSpawn():
 		elif (not underitem.is_in_group("Button")):
 			tmpbool = false;
 		
-		if tmpbool:
-			controller.UpdateNode(get_node("."), targ)
-		else:
+		controller.UpdateNode(get_node("."), targ)
+		if not tmpbool:
 			controller.Explode(get_node("."), underitem)
+
 		spawned = true;
 		travelled = 0;
 	#kinebody.set_pos(Vector2(0.0, 0.0))
@@ -114,7 +125,6 @@ func onInitialCollide(dir):
 
 func onPreCollide(id, player):
 	if (id == 0):
-		print ("ho dang")
 		return true
 	elif (id == 1):
 		return false
@@ -199,7 +209,6 @@ func CheckShoot(shootdir):
 			orientation.append(shootdir)
 			continue
 		else:
-			print(id)
 			if (id.is_in_group("Terrain") || id.is_in_group("Enemies") || id.is_in_group("Player")):
 				#id.TimeWait = controller.gunPower;
 				#controller.UpdateNode(0, id.get_pos()/16);
@@ -216,7 +225,6 @@ func CheckShoot(shootdir):
 		laser.d_mode(dir_dic[dir])
 		get_parent().add_child(laser)
 		laser.set_global_pos(laserspots[ind])
-		print(laserspots[ind])
 
 func show_select_spikes(list_of_spikes):
 
