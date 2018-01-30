@@ -40,12 +40,19 @@ func _process(delta):
 			set_pos(get_pos().snapped(Vector2(4,4)))
 
 func PreCheck(playerPos, playerPrevPos): #playerPos is the future position of the player
+	var anim = find_node("AnimationPlayer")
 	if spawned:
 		targ = get_pos()/16
 		var ydiff = playerPos.y - get_pos().y
+		var xdiff = playerPos.x - get_pos().x
 		#print(ydiff)
 		if not startshoot:
 			if (abs(ydiff) < 1):
+				print(dir)
+				if xdiff < 0:
+					anim.play("PrimeLeft")
+				elif xdiff > 0:
+					anim.play("PrimeRight")
 				dir = Vector2(0.0, 0.0);
 				shootdir = Vector2(0.0, 0.0)
 				startshoot = true;
