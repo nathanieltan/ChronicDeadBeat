@@ -193,7 +193,9 @@ tracks/0/keys = {
 "values": [ 32, 33, 34, 35, 36, 37, 38, 39 ]
 }
 
-[node name="Player" type="Sprite"]
+[node name="Player" type="Sprite" groups=[
+"Player",
+]]
 
 transform/pos = Vector2( 296, 184 )
 texture = ExtResource( 1 )
