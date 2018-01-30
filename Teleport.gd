@@ -17,6 +17,7 @@ func _ready():
 func _process(delta):
 	if able_to_progress():
 		var level = get_tree().get_root().get_child(0).finishLevel(get_parent().next_level, get_tree().get_current_scene().get_filename())
+		print(level)
 		get_tree().get_root().get_child(0).set_movelist(controller.movelist);
 		get_tree().change_scene(level)
 	var Teleport = get_node("AnimationPlayer")

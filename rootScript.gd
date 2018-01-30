@@ -60,7 +60,7 @@ func _process(delta):
 		else:
 			actionSignal = false;
 		lastmoving = moving;
-		
+
 		if actionSignal or not player.spawned:
 			actionvalid = player.InitialCheck(movement, shootdir)
 			
