@@ -69,7 +69,7 @@ func PreCheck(playerPos, playerprevpos): #playerPos is the future position of th
 				targ += dir
 				controller.UpdateNode(0, get_pos()/16)
 				controller.UpdateNode(get_node("."), targ)
-				print("happened")
+				#print("happened")
 			else:
 				dir = Vector2(0.0, 0.0)
 				#return true
@@ -159,7 +159,8 @@ func IntToMove(id):
 				test = true
 			elif (direction.is_in_group("Button") || direction.is_in_group("Player")):
 				test = true
-				controller.Explode(direction, get_node("."))
+				if (direction.is_in_group("Player")):
+					controller.Explode(direction, get_node("."))
 			
 			if test:
 				animlist.append(count)

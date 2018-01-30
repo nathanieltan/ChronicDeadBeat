@@ -203,7 +203,8 @@ func CheckShoot(shootdir):
 			if (typeof(shootdir) == 2 and shootdir == 0):
 				test = false;
 		
-
+		
+		print("actual shoot: ")
 		if test:
 			laserspots.append(checkhead)
 			orientation.append(shootdir)
@@ -212,6 +213,7 @@ func CheckShoot(shootdir):
 			if (id.is_in_group("Terrain") || id.is_in_group("Enemies") || id.is_in_group("Player")):
 				#id.TimeWait = controller.gunPower;
 				#controller.UpdateNode(0, id.get_pos()/16);
+				print("dafuq yo?")
 				controller.Explode(id, get_node("."));
 			break;
 
