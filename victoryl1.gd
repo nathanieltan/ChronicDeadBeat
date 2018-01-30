@@ -1,5 +1,4 @@
 extends Node2D
-var next_level = "res://Level2.tscn"
 
 # class member variables go here, for example:
 # var a = 2

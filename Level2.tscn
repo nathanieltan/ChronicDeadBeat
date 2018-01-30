@@ -72,7 +72,7 @@ offset = Vector2( 0, -12 )
 
 [node name="Player" parent="." instance=ExtResource( 8 )]
 
-transform/pos = Vector2( 296, 280 )
+transform/pos = Vector2( 296, 296 )
 
 [node name="VictoryL2" type="Node2D" parent="."]
 
